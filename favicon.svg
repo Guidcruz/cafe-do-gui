@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#8E1F2B"/>
+  <!-- vapor -->
+  <g fill="none" stroke="#F8F8F4" stroke-width="16" stroke-linecap="round" opacity=".85">
+    <path d="M206 112 q-20 24 0 48 t0 48"/>
+    <path d="M256 96 q-20 24 0 48 t0 48"/>
+    <path d="M306 112 q-20 24 0 48 t0 48"/>
+  </g>
+  <!-- pires -->
+  <ellipse cx="252" cy="384" rx="150" ry="22" fill="#F8F8F4"/>
+  <!-- alça -->
+  <path d="M340 262 q58 0 58 46 q0 46 -66 46" fill="none" stroke="#F8F8F4" stroke-width="22" stroke-linecap="round"/>
+  <!-- xícara -->
+  <path d="M148 236 L356 236 L340 346 Q252 376 164 346 Z" fill="#F8F8F4"/>
+  <!-- borda com café e crema -->
+  <ellipse cx="252" cy="236" rx="104" ry="22" fill="#F8F8F4"/>
+  <ellipse cx="252" cy="238" rx="88" ry="15" fill="#3B2116"/>
+  <ellipse cx="252" cy="240" rx="74" ry="10" fill="#C08A52"/>
+</svg>
