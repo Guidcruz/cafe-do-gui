@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="description" content="Cardápio e receitas de café: espresso, bebidas com leite, gelados, V60 e Origami.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
@@ -17,7 +17,9 @@
 <title>Café do Gui</title>
 <style>
 :root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html,body{overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{margin:0}
+*{touch-action:pan-x pan-y}
 img{max-width:100%}
 [hidden]{display:none!important}
 </style>
@@ -641,6 +643,9 @@ html{scroll-behavior:smooth}
 })();
 </script>
 <script>
+// Bloqueia zoom por pinça (o iOS ignora parte do viewport)
+['gesturestart','gesturechange','gestureend'].forEach(function(t){document.addEventListener(t,function(e){e.preventDefault();},{passive:false});});
+document.addEventListener('touchmove',function(e){ if(e.touches.length>1) e.preventDefault(); },{passive:false});
 if ('serviceWorker' in navigator) { window.addEventListener('load', function(){ navigator.serviceWorker.register('/sw.js').catch(function(){}); }); }
 </script>
 </body>
