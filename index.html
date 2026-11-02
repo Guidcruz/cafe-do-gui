@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Cardápio e receitas de café: espresso, bebidas com leite, gelados, V60 e Origami.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☕</text></svg>">
+<style>
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+<title>Café do Gui</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: cardápio de uma coluna, seções por método, cada bebida abre a receita completa */
+:root{
+  --bg:#EDEEE8;          /* porcelana esverdeada */
+  --paper:#F8F8F4;
+  --ink:#1F1A17;
+  --muted:#6B655E;
+  --line:#D3D2C8;
+  --accent:#8E1F2B;      /* cereja do café */
+  --accent-soft:#F1DEDD;
+  --crema:#B9844A;
+  --c-espresso:#3B2116; --c-crema:#C08A52; --c-milk:#F6F1E7; --c-milkcoffee:#C9A07A; --c-foam:#FBF8F2;
+  --c-americano:#5A3424; --c-choc:#4A2A1E; --c-tonic:#E4EEF0; --c-icecream:#F3E6C4; --c-ice:#FFFFFF; --c-brew:#7A3E1F;
+  --glass:rgba(140,150,150,.10);
+  --font-display:"Young Serif", Georgia, "Times New Roman", serif;
+  --font-body:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171412; --paper:#221D1A; --ink:#EEE7DF; --muted:#A79D93; --line:#3A332E;
+    --accent:#E0717C; --accent-soft:#3A2225; --crema:#D3A26B; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171412; --paper:#221D1A; --ink:#EEE7DF; --muted:#A79D93; --line:#3A332E;
+  --accent:#E0717C; --accent-soft:#3A2225; --crema:#D3A26B; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding-block:28px 64px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+  display:flex;flex-direction:column;gap:40px}
+
+header{display:flex;flex-direction:column;gap:14px;border-bottom:2px solid var(--ink);padding-bottom:22px}
+.eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--font-display);font-weight:400;font-size:clamp(44px,11vw,76px);line-height:.95;margin:0;letter-spacing:-.01em;text-wrap:balance}
+h1 em{font-style:normal;color:var(--accent)}
+.lede{margin:0;max-width:56ch;color:var(--muted)}
+.kit{display:flex;flex-wrap:wrap;gap:8px}
+.kit span{font-family:var(--font-mono);font-size:12px;border:1px solid var(--line);border-radius:999px;padding:4px 10px;background:var(--paper)}
+
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;margin-block:-10px;
+  display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{flex:none;text-decoration:none;color:var(--ink);font-weight:600;font-size:14px;padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:var(--paper)}
+nav a:hover,nav a:focus-visible{border-color:var(--accent);color:var(--accent);outline:none}
+
+section{display:flex;flex-direction:column;gap:6px;scroll-margin-top:64px}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+h2{font-family:var(--font-display);font-weight:400;font-size:32px;margin:0;line-height:1.1}
+.sec-note{font-family:var(--font-mono);font-size:12px;color:var(--muted)}
+
+details{border-top:1px dashed var(--line)}
+details:last-of-type{border-bottom:1px dashed var(--line)}
+summary{list-style:none;cursor:pointer;padding:14px 2px;display:grid;grid-template-columns:52px 1fr auto;gap:2px 14px;align-items:baseline}
+.thumb{grid-row:1 / span 2;align-self:center;width:52px;height:52px;border-radius:12px;background:var(--paper);border:1px solid var(--line);display:grid;place-items:center}
+.thumb svg{width:44px;height:44px;display:block}
+.fig{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.fig svg{width:120px;height:120px;flex:none}
+.legend{display:flex;flex-direction:column;gap:6px;margin:0;padding:0;list-style:none;font-size:14px;min-width:0}
+.legend li{display:flex;align-items:center;gap:8px}
+.legend i{width:14px;height:14px;border-radius:4px;border:1px solid var(--line);flex:none}
+summary::-webkit-details-marker{display:none}
+summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.name{font-weight:700;font-size:18px;display:flex;align-items:baseline;gap:10px;min-width:0}
+.name::after{content:"";flex:1;border-bottom:1px dotted var(--muted);transform:translateY(-4px);opacity:.6;min-width:20px}
+.ratio{font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--accent);white-space:nowrap;font-variant-numeric:tabular-nums}
+.desc{grid-column:2/-1;color:var(--muted);font-size:14.5px}
+@media (max-width:420px){.ratio{grid-column:2/-1}.name{font-size:17px}}
+details[open] .name{color:var(--accent)}
+
+.recipe{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:18px;margin:0 0 16px;display:flex;flex-direction:column;gap:16px}
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.spec{background:var(--paper);padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.spec b{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:400}
+.spec span{font-family:var(--font-mono);font-weight:600;font-size:15px;font-variant-numeric:tabular-nums}
+ol.steps{margin:0;padding-left:0;list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:10px}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
+ol.steps li::before{content:counter(s);font-family:var(--font-mono);font-size:12px;font-weight:600;width:24px;height:24px;border-radius:50%;
+  display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);margin-top:1px}
+.t{font-family:var(--font-mono);font-size:13px;color:var(--crema);font-weight:600}
+.tip{font-size:14px;color:var(--muted);border-left:2px solid var(--crema);padding-left:12px;margin:0}
+
+/* Calculadora */
+.calc{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.calc-row{display:flex;flex-wrap:wrap;gap:12px}
+.field{display:flex;flex-direction:column;gap:4px;flex:1 1 140px;min-width:0}
+.field label{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.field input,.field select{font:600 18px var(--font-mono);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;width:100%}
+.field input:focus,.field select:focus{outline:2px solid var(--accent);outline-offset:1px}
+.result{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.result div{display:flex;flex-direction:column}
+.result b{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:400}
+.result span{font-family:var(--font-display);font-size:34px;line-height:1.1;font-variant-numeric:tabular-nums}
+.result .main span{color:var(--accent)}
+.mode{display:flex;gap:4px;padding:4px;border:1px solid var(--line);border-radius:999px;background:var(--bg);align-self:flex-start;max-width:100%}
+.mode button{font:600 14px var(--font-body);color:var(--muted);background:transparent;border:0;border-radius:999px;padding:8px 14px;cursor:pointer}
+.mode button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.mode button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.calc-note{margin:0;font-size:13.5px;color:var(--muted)}
+
+/* Ajustes */
+.fix{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.fix div{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--paper)}
+.fix h3{margin:0 0 4px;font-size:15px}
+.fix p{margin:0;font-size:14.5px;color:var(--muted)}
+footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+html{scroll-behavior:smooth}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="eyebrow">Cardápio · bar de casa</div>
+  <h1>Café<br><em>do Gui</em></h1>
+  <p class="lede">Receitas para a máquina de espresso, a V60 e o Origami. Toque numa bebida para abrir a receita com doses, tempos e passos.</p>
+  <div class="kit"><span>Espresso 9 g / 18 g</span><span>Hario V60</span><span>Origami Dripper</span></div>
+</header>
+
+<nav aria-label="Seções">
+  <a href="#espresso">Espresso</a>
+  <a href="#leite">Com leite</a>
+  <a href="#gelados">Gelados</a>
+  <a href="#v60">V60</a>
+  <a href="#origami">Origami</a>
+  <a href="#calculadora">Calculadora</a>
+  <a href="#ajustes">Ajustes</a>
+</nav>
+
+<!-- ESPRESSO -->
+<section id="espresso">
+  <div class="sec-head"><h2>Espresso</h2><span class="sec-note">9 bar · 92–94 °C</span></div>
+
+  <details>
+    <summary><span class="name">Espresso simples</span><span class="ratio">9 g → 18 g</span><span class="desc">A dose curta da máquina. Bom para provar um café novo.</span></summary>
+    <div class="recipe">
+      <div class="specs"><div class="spec"><b>Café</b><span>9 g</span></div><div class="spec"><b>Na xícara</b><span>18 g</span></div><div class="spec"><b>Proporção</b><span>1 : 2</span></div><div class="spec"><b>Tempo</b><span>25–30 s</span></div></div>
+      <ol class="steps">
+        <li><span>Pese 9 g e moa fino. Use o cesto simples.</span></li>
+        <li><span>Distribua, nivele e compacte com pressão firme e reta.</span></li>
+        <li><span>Purgue o grupo por 2 s, encaixe e extraia direto na xícara pré-aquecida.</span></li>
+        <li><span>Pare em <span class="t">18 g</span> na balança, entre <span class="t">25 e 30 s</span>.</span></li>
+      </ol>
+      <p class="tip">O cesto simples é menos tolerante. Se oscilar muito entre doses, prefira o duplo e divida em duas xícaras.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="name">Espresso duplo</span><span class="ratio">18 g → 36 g</span><span class="desc">A base de quase tudo neste cardápio.</span></summary>
+    <div class="recipe">
+      <div class="specs"><div class="spec"><b>Café</b><span>18 g</span></div><div class="spec"><b>Na xícara</b><span>36 g</span></div><div class="spec"><b>Proporção</b><span>1 : 2</span></div><div class="spec"><b>Tempo</b><span>25–30 s</span></div></div>
+      <ol class="steps">
+        <li><span>Pese 18 g, moa fino e use o cesto duplo.</span></li>
+        <li><span>Distribua com WDT ou batidinhas laterais e compacte nivelado.</span></li>
+        <li><span>Extraia até <span class="t">36 g</span>. Primeiras gotas em torno de <span class="t">6–8 s</span>.</span></li>
+        <li><span>Mexa antes de beber: o espresso separa em camadas.</span></li>
+      </ol>
+      <p class="tip">Torras escuras: 93 °C ou menos. Torras claras: 94 °C e até 1 : 2,5 (45 g).</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="name">Ristretto</span><span class="ratio">18 g → 22–27 g</span><span class="desc">Mais curto, denso e doce. Pouco amargor.</span></summary>
+    <div class="recipe">
+      <div class="specs"><div class="spec"><b>Café</b><span>18 g</span></div><div class="spec"><b>Na xícara</b><span>22–27 g</span></div><div class="spec"><b>Proporção</b><span>1 : 1,3</span></div><div class="spec"><b>Tempo</b><span>18–22 s</span></div></div>
+      <ol class="steps">
+        <li><span>Mesmo preparo do duplo, moagem igual ou um pouco mais fina.</span></li>
+        <li><span>Corte a extração em <span class="t">22–27 g</span>.</span></li>
+      </ol>
+      <p class="tip">Ótimo como base de flat white ou cortado: sabor concentrado que aparece por cima do leite.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="name">Lungo</span><span class="ratio">18 g → 54 g</span><span class="desc">Mais longo e leve, sem perder corpo. Funciona melhor com torras claras.</span></summary>
+    <div class="recipe">
+      <div class="specs"><div class="spec"><b>Café</b><span>18 g</span></div><div class="spec"><b>Na xícara</b><span>54 g</span></div><div class="spec"><b>Proporção</b><span>1 : 3</span></div><div class="spec"><b>Tempo</b><span>30–40 s</span></div></div>
+      <ol class="steps">
+        <li><span>Moa um pouco mais grosso que o duplo.</span></li>
+        <li><span>Extraia até <span class="t">54 g</span>. Se passar de 40 s, engrosse a moagem.</span></li>
+      </ol>
+      <p class="tip">Se ficar amargo e seco no fim, prefira um americano: mesmo volume, menos amargor.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="name">Americano</span><span class="ratio">duplo + 120 ml</span><span class="desc">Espresso diluído em água quente. Limpo e longo.</span></summary>
+    <div class="recipe">
+      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Água</b><span>120–150 ml</span></div><div class="spec"><b>Temp. água</b><span>85–90 °C</span></div></div>
+      <ol class="steps">
+        <li><span>Coloque a água quente na xícara primeiro.</span></li>
+        <li><span>Extraia o duplo por cima. Assim a crema fica na superfície.</span></li>
+      </ol>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="name">Affogato</span><span class="ratio">duplo + 1 bola</span><span class="desc">Espresso quente sobre sorvete de creme. Sobremesa em 30 segundos.</span></summary>
+    <div class="recipe">
+      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Sorvete</b><span>1 bola (≈ 60 g)</span></div></div>
+      <ol class="steps">
+        <li><span>Coloque a bola de sorvete num copo baixo gelado.</span></li>
+        <li><span>Extraia o duplo numa jarrinha e despeje por cima na hora de servir.</span></li>
+      </ol>
+      <p class="tip">Sorvete de baunilha, doce de leite ou pistache combinam bem.</p>
+    </div>
+  </details>
+</section>
+
+<!-- COM LEITE -->
+<section id="leite">
+  <div class="sec-head"><h2>Com leite</h2><span class="sec-note">leite a 55–65 °C</span></div>
+
+  <details>
+    <summary><span class="name">Macchiato</span><span class="ratio">simples + espuma</span><span class="desc">Espresso “manchado” com uma colher de espuma de leite.</span></summary>
+    <div class="recipe">
+      <div class="specs"><div class="spec"><b>Espresso</b><span>9 → 18 g</span></div><div class="spec"><b>Leite</b><span>1–2 colheres de espuma</span></div><div class="spec"><b>Xícara</b><span>60–90 ml</span></div></div>
+      <ol class="steps">
+        <li><span>Extraia o simples (9 g → 18 g) ou o duplo, se quiser mais forte.</span></li>
+        <li><span>Vaporize um pouco de leite com bastante ar e coloque só a espuma por cima.</span></li>
+      </ol>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="name">Cortado</span><span class="ratio">duplo + 40 ml</span><span class="desc">Meio a meio. O café ainda manda.</span></summary>
+    <div class="recipe">
+      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Leite</b><span>40–60 ml</span></div><div class="spec"><b>Copo</b><span>120 ml</span></div></div>
+      <ol class="steps">
+        <li><span>Extraia o duplo num copo pequeno de vidro.</span></li>
+        <li><span>Vaporize o leite com pouquíssimo ar (quase sem espuma) e complete.</span></li>
+      </ol>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="name">Flat white</span><span class="ratio">ristretto + 120 ml</span><span class="desc">Microespuma fina e brilhante, sabor de café presente.</span></summary>
+    <div class="recipe">
+      <div class="specs"><div class="spec"><b>Espresso</b><span>ristretto 18 → 27 g</span></div><div class="spec"><b>Leite</b><span>110–130 ml</span></div><div class="spec"><b>Espuma</b><span>≈ 0,5 cm</span></div></div>
+      <ol class="steps">
+        <li><span>Extraia o ristretto numa xícara de 160 ml.</span></li>
+        <li><span>Vaporize o leite incorporando ar só por <span class="t">2–3 s</span>, depois gire até 60 °C.</span></li>
+        <li><span>Bata a jarra na bancada, gire e despeje firme, terminando com um coração ou tulipa.</span></li>
+      </ol>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="name">Cappuccino</span><span class="ratio">duplo + 150 ml</span><span class="desc">Espuma mais alta e aveludada. Clássico da manhã.</span></summary>
+    <div class="recipe">
+      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Leite</b><span>130–150 ml</span></div><div class="spec"><b>Espuma</b><span>1–1,5 cm</span></div></div>
+      <ol class="steps">
+        <li><span>Extraia o duplo numa xícara de 180–200 ml.</span></li>
+        <li><span>Vaporize incorporando ar por <span class="t">5–6 s</span> (som de “papel rasgando”), depois gire até 60–65 °C.</span></li>
+        <li><span>Despeje primeiro mais alto, depois aproxime a jarra para a espuma subir.</span></li>
+      </ol>
+      <p class="tip">Canela ou cacau por cima é opcional.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="name">Latte</span><span class="ratio">duplo + 220 ml</span><span class="desc">Mais leite, mais suave. Bom para torras médias e escuras.</span></summary>
+    <div class="recipe">
+      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Leite</b><span>200–240 ml</span></div><div class="spec"><b>Espuma</b><span>≈ 0,5–1 cm</span></div></div>
+      <ol class="steps">
+        <li><span>Extraia o duplo num copo ou caneca de 300 ml.</span></li>
+        <li><span>Vaporize com pouco ar, até 60 °C, e despeje devagar.</span></li>
+      </ol>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="name">Mocha</span><span class="ratio">duplo + cacau + 180 ml</span><span class="desc">Latte com chocolate. Doce de inverno.</span></summary>
+    <div class="recipe">
+      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Chocolate</b><span>15–20 g</span></div><div class="spec"><b>Leite</b><span>180 ml</span></div></div>
+      <ol class="steps">
+        <li><span>Coloque o chocolate (em pó 50% ou ganache) na caneca.</span></li>
+        <li><span>Extraia o duplo por cima e mexa até dissolver.</span></li>
+        <li><span>Complete com leite vaporizado.</span></li>
+      </ol>
+    </div>
+  </details>
+</section>
+
+<!-- GELADOS -->
+<section id="gelados">
+  <div class="sec-head"><h2>Gelados</h2><span class="sec-note">gelo sempre por último no shaker, primeiro no copo</span></div>
+
+  <details>
+    <summary><span class="name">Espresso tônica</span><span class="ratio">duplo + 150 ml</span><span class="desc">Amargo, cítrico e efervescente. Prefira um café frutado.</span></summary>
+    <div class="recipe">
+      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Tônica</b><span>150 ml gelada</span></div><div class="spec"><b>Gelo</b><span>copo cheio</span></div></div>
+      <ol class="steps">
+        <li><span>Encha o copo de gelo e coloque a tônica.</span></li>
+        <li><span>Extraia o duplo numa jarrinha e despeje devagar, sobre o gelo, para formar camadas.</span></li>
+      </ol>
+      <p class="tip">Uma casca de laranja ou limão-siciliano por cima realça os aromas.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="name">Shakerato</span><span class="ratio">duplo + gelo + xarope</span><span class="desc">Espresso batido com gelo até espumar. Servido em taça.</span></summary>
+    <div class="recipe">
+      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Xarope</b><span>10 ml (opcional)</span></div><div class="spec"><b>Gelo</b><span>5–6 cubos</span></div></div>
+      <ol class="steps">
+        <li><span>Extraia o duplo direto na coqueteleira com o xarope.</span></li>
+        <li><span>Adicione o gelo e bata forte por <span class="t">15 s</span>.</span></li>
+        <li><span>Coe numa taça gelada.</span></li>
+      </ol>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="name">Iced latte</span><span class="ratio">duplo + 180 ml frio</span><span class="desc">Leite gelado e espresso por cima.</span></summary>
+    <div class="recipe">
+      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Leite</b><span>180 ml gelado</span></div><div class="spec"><b>Gelo</b><span>copo cheio</span></div></div>
+      <ol class="steps">
+        <li><span>Gelo no copo, depois o leite.</span></li>
+        <li><span>Despeje o duplo por cima. Mexa antes de beber.</span></li>
+      </ol>
+    </div>
+  </details>
+</section>
+
+<!-- V60 -->
+<section id="v60">
+  <div class="sec-head"><h2>V60</h2><span class="sec-note">filtro cônico · moagem média-fina</span></div>
+
+  <details>
+    <summary><span class="name">V60 do dia a dia</span><span class="ratio">15 g → 250 g</span><span class="desc">Receita equilibrada para uma xícara, com dois despejos.</span></summary>
+    <div class="recipe">
+      <div class="specs"><div class="spec"><b>Café</b><span>15 g</span></div><div class="spec"><b>Água</b><span>250 g</span></div><div class="spec"><b>Proporção</b><span>1 : 16,7</span></div><div class="spec"><b>Água</b><span>93–96 °C</span></div><div class="spec"><b>Total</b><span>≈ 3:00–3:30</span></div></div>
+      <ol class="steps">
+        <li><span>Enxágue o filtro com água quente e descarte. Moa médio-fino (sal refinado a sal grosso).</span></li>
+        <li><span><span class="t">0:00</span> Bloom com 30–45 g. Gire o suporte para molhar tudo.</span></li>
+        <li><span><span class="t">0:45</span> Despeje em espiral até 150 g (≈ 60% da água).</span></li>
+        <li><span><span class="t">1:15</span> Despeje até 250 g, mais suave e pelo centro.</span></li>
+        <li><span>Dê uma leve girada no suporte para nivelar a cama de café. Deixe drenar.</span></li>
+      </ol>
+      <p class="tip">Cama plana no final é sinal de extração uniforme.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="name">4:6 (Tetsu Kasuya)</span><span class="ratio">20 g → 300 g</span><span class="desc">Cinco despejos iguais. Você ajusta doçura e corpo pelo ritmo.</span></summary>
+    <div class="recipe">
+      <div class="specs"><div class="spec"><b>Café</b><span>20 g</span></div><div class="spec"><b>Água</b><span>300 g</span></div><div class="spec"><b>Proporção</b><span>1 : 15</span></div><div class="spec"><b>Moagem</b><span>grossa</span></div><div class="spec"><b>Total</b><span>≈ 3:30</span></div></div>
+      <ol class="steps">
+        <li><span><span class="t">0:00</span> 60 g (até 60 g).</span></li>
+        <li><span><span class="t">0:45</span> 60 g (até 120 g). Estes dois primeiros definem o sabor: primeiro maior = mais doce, primeiro menor = mais ácido.</span></li>
+        <li><span><span class="t">1:30</span> 60 g (até 180 g).</span></li>
+        <li><span><span class="t">2:15</span> 60 g (até 240 g).</span></li>
+        <li><span><span class="t">3:00</span> 60 g (até 300 g). Os últimos três definem a intensidade: menos despejos = mais leve.</span></li>
+      </ol>
+      <p class="tip">Para um café mais doce: 50 g + 70 g nos dois primeiros despejos.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="name">V60 gelada</span><span class="ratio">20 g → 180 g + 120 g gelo</span><span class="desc">Método japonês: o café quente cai direto no gelo e preserva o aroma.</span></summary>
+    <div class="recipe">
+      <div class="specs"><div class="spec"><b>Café</b><span>20 g</span></div><div class="spec"><b>Água quente</b><span>180 g</span></div><div class="spec"><b>Gelo na jarra</b><span>120 g</span></div><div class="spec"><b>Moagem</b><span>mais fina</span></div></div>
+      <ol class="steps">
+        <li><span>Coloque 120 g de gelo na jarra e a V60 em cima.</span></li>
+        <li><span><span class="t">0:00</span> Bloom com 40 g por 45 s.</span></li>
+        <li><span><span class="t">0:45</span> Despeje até 110 g.</span></li>
+        <li><span><span class="t">1:15</span> Despeje até 180 g. Mexa a jarra e sirva em copo com gelo novo.</span></li>
+      </ol>
+      <p class="tip">Cafés frutados e florais ficam ótimos assim.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ORIGAMI -->
+<section id="origami">
+  <div class="sec-head"><h2>Origami</h2><span class="sec-note">aceita filtro cônico ou de fundo plano</span></div>
+
+  <details>
+    <summary><span class="name">Origami com filtro cônico</span><span class="ratio">16 g → 260 g</span><span class="desc">Fluxo mais rápido que a V60. Xícara clara e aromática.</span></summary>
+    <div class="recipe">
+      <div class="specs"><div class="spec"><b>Café</b><span>16 g</span></div><div class="spec"><b>Água</b><span>260 g</span></div><div class="spec"><b>Proporção</b><span>1 : 16</span></div><div class="spec"><b>Água</b><span>92–94 °C</span></div><div class="spec"><b>Total</b><span>≈ 2:30–3:00</span></div></div>
+      <ol class="steps">
+        <li><span>Use filtro V60. Moa um pouco mais fino que na V60, porque as ranhuras drenam rápido.</span></li>
+        <li><span><span class="t">0:00</span> Bloom com 40 g por 40 s.</span></li>
+        <li><span><span class="t">0:40</span> Despeje até 110 g.</span></li>
+        <li><span><span class="t">1:10</span> Despeje até 185 g.</span></li>
+        <li><span><span class="t">1:40</span> Despeje até 260 g e deixe drenar.</span></li>
+      </ol>
+      <p class="tip">Pulsos menores ajudam a controlar o fluxo rápido do Origami.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="name">Origami com filtro de fundo plano</span><span class="ratio">20 g → 320 g</span><span class="desc">Filtro tipo Kalita Wave. Mais corpo e doçura, muito consistente.</span></summary>
+    <div class="recipe">
+      <div class="specs"><div class="spec"><b>Café</b><span>20 g</span></div><div class="spec"><b>Água</b><span>320 g</span></div><div class="spec"><b>Proporção</b><span>1 : 16</span></div><div class="spec"><b>Moagem</b><span>média</span></div><div class="spec"><b>Total</b><span>≈ 3:00–3:30</span></div></div>
+      <ol class="steps">
+        <li><span>Encaixe o filtro de fundo plano (185) e enxágue.</span></li>
+        <li><span><span class="t">0:00</span> Bloom com 50 g por 30–40 s.</span></li>
+        <li><span>Despeje pulsos de <span class="t">50–60 g</span> a cada <span class="t">20–30 s</span>, sempre no centro, mantendo o nível da água constante.</span></li>
+        <li><span>Chegue a 320 g por volta de <span class="t">2:15</span> e deixe drenar.</span></li>
+      </ol>
+      <p class="tip">É o modo mais tolerante: bom para torras médias e cafés que você ainda está conhecendo.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="name">Origami para dois</span><span class="ratio">30 g → 480 g</span><span class="desc">Duas xícaras de uma vez, com filtro de fundo plano.</span></summary>
+    <div class="recipe">
+      <div class="specs"><div class="spec"><b>Café</b><span>30 g</span></div><div class="spec"><b>Água</b><span>480 g</span></div><div class="spec"><b>Proporção</b><span>1 : 16</span></div><div class="spec"><b>Total</b><span>≈ 3:45–4:15</span></div></div>
+      <ol class="steps">
+        <li><span>Moa um pouco mais grosso que na receita de 20 g.</span></li>
+        <li><span><span class="t">0:00</span> Bloom com 75 g por 45 s.</span></li>
+        <li><span>Pulsos de <span class="t">80–100 g</span> até 480 g por volta de <span class="t">2:45</span>.</span></li>
+      </ol>
+    </div>
+  </details>
+</section>
+
+<!-- CALCULADORA -->
+<section id="calculadora">
+  <div class="sec-head"><h2>Calculadora</h2><span class="sec-note">a partir do café ou da bebida pronta</span></div>
+  <div class="calc">
+    <div class="mode" role="group" aria-label="Calcular a partir de">
+      <button type="button" id="m-cafe" aria-pressed="true">Tenho o café</button>
+      <button type="button" id="m-bebida" aria-pressed="false">Quero a bebida</button>
+    </div>
+    <div class="calc-row">
+      <div class="field" id="f-g"><label for="g">Café (g)</label><input id="g" type="number" inputmode="decimal" min="1" max="100" step="0.5" value="15"></div>
+      <div class="field" id="f-v" hidden><label for="v">Bebida pronta (ml)</label><input id="v" type="number" inputmode="decimal" min="10" max="2000" step="10" value="250"></div>
+      <div class="field"><label for="r">Proporção</label>
+        <select id="r">
+          <option value="2">1 : 2 · espresso</option>
+          <option value="15">1 : 15 · encorpado</option>
+          <option value="16">1 : 16 · equilibrado</option>
+          <option value="16.7" selected>1 : 16,7 · V60 do dia a dia</option>
+          <option value="17">1 : 17 · leve</option>
+        </select>
+      </div>
+    </div>
+    <div class="result">
+      <div id="o1"><b id="l1">Água total</b><span id="x1">250 g</span></div>
+      <div id="o2"><b id="l2">Bloom (2–3×)</b><span id="x2">30–45 g</span></div>
+      <div id="o3"><b id="l3">Bebida pronta ≈</b><span id="x3">220 ml</span></div>
+    </div>
+    <p class="calc-note" id="note">No coado, o pó retém cerca de 2 g de água por grama de café. Por isso a bebida sai menor que a água despejada.</p>
+  </div>
+</section>
+
+<!-- AJUSTES -->
+<section id="ajustes">
+  <div class="sec-head"><h2>Ajustes rápidos</h2><span class="sec-note">mude uma coisa por vez</span></div>
+  <div class="fix">
+    <div><h3>Azedo, ralo, salgado</h3><p>Subextraído. Moa mais fino, use água mais quente ou alongue a extração.</p></div>
+    <div><h3>Amargo, seco, adstringente</h3><p>Sobreextraído. Moa mais grosso, baixe 1–2 °C ou encurte a extração.</p></div>
+    <div><h3>Espresso rápido demais</h3><p>Menos de 20 s: moagem mais fina ou confira se a dose tem mesmo 18 g.</p></div>
+    <div><h3>Coado demora muito</h3><p>Mais de 4 min: moagem mais grossa e despejos mais suaves, sem afundar a cama.</p></div>
+  </div>
+</section>
+
+<footer>Café do Gui · receitas de referência. Ajuste ao seu café, à sua moagem e ao seu gosto.</footer>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id);};
+  var g=$('g'), v=$('v'), r=$('r'), mode='cafe';
+  var RET=2; // água retida pelo pó: ~2 g por g de café
+  function num(el){return parseFloat(String(el.value).replace(',','.'))||0;}
+  function fmt(n){return (Math.round(n*10)/10).toString().replace('.',',');}
+  function set(i,label,val,main){$('l'+i).textContent=label;$('x'+i).textContent=val;$('o'+i).className=main?'main':'';}
+  function calc(){
+    var ratio=parseFloat(r.value), esp=ratio<=3, c, w, d;
+    if(mode==='cafe'){
+      c=num(g); w=c*ratio; d=esp?w:Math.max(0,w-c*RET);
+    } else {
+      d=num(v);
+      c=esp ? d/ratio : d/(ratio-RET);
+      w=esp ? d : c*ratio;
+    }
+    if(esp){
+      $('note').textContent='No espresso, a proporção já é a bebida na xícara: o peso de café vezes 2. Ex.: 18 g de café → 36 g de espresso.';
+      if(mode==='cafe'){
+        set(1,'Na xícara',fmt(Math.round(w))+' g',true);
+        set(2,'Cesto', c<=12?'simples':'duplo');
+        set(3,'Tempo','25–30 s');
+      } else {
+        set(1,'Café',fmt(c)+' g',true);
+        set(2,'Cesto', c<=12?'simples (9 g)':'duplo (18 g)');
+        set(3,'Tempo','25–30 s');
+      }
+    } else {
+      $('note').textContent='No coado, o pó retém cerca de 2 g de água por grama de café. Por isso a bebida sai menor que a água despejada.';
+      var bloom=fmt(Math.round(c*2))+'–'+fmt(Math.round(c*3))+' g';
+      if(mode==='cafe'){
+        set(1,'Água total',fmt(Math.round(w))+' g',true);
+        set(2,'Bloom (2–3×)',bloom);
+        set(3,'Bebida pronta ≈',fmt(Math.round(d))+' ml');
+      } else {
+        set(1,'Café',fmt(c)+' g',true);
+        set(2,'Água total',fmt(Math.round(w))+' g',true);
+        set(3,'Bloom (2–3×)',bloom);
+      }
+    }
+  }
+  function setMode(m){
+    mode=m;
+    $('m-cafe').setAttribute('aria-pressed',m==='cafe');
+    $('m-bebida').setAttribute('aria-pressed',m==='bebida');
+    $('f-g').hidden=m!=='cafe'; $('f-v').hidden=m!=='bebida';
+    calc();
+  }
+  $('m-cafe').addEventListener('click',function(){setMode('cafe');});
+  $('m-bebida').addEventListener('click',function(){setMode('bebida');});
+  g.addEventListener('input',calc); v.addEventListener('input',calc); r.addEventListener('change',calc); calc();
+})();
+
+/* Ilustrações das bebidas: corte do copo mostrando as camadas */
+(function(){
+  var NAMES={espresso:'Espresso',crema:'Crema',milk:'Leite',milkcoffee:'Leite com café',foam:'Espuma',
+    americano:'Café com água',choc:'Chocolate',tonic:'Tônica',icecream:'Sorvete',brew:'Café coado',ice:'Gelo'};
+  // Recipientes: interior (y topo/fundo, x topo e fundo) + extras
+  var V={
+    demi:{t:30,b:50,tl:15,tr:45,bl:20,br:40,handle:[45,34,53,44],saucer:true},
+    cup:{t:20,b:52,tl:10,tr:50,bl:18,br:42,handle:[48,26,58,42],saucer:true},
+    mug:{t:14,b:54,tl:14,tr:44,bl:14,br:44,handle:[44,22,56,44]},
+    glass:{t:8,b:58,tl:18,tr:46,bl:21,br:43},
+    short:{t:24,b:56,tl:13,tr:51,bl:16,br:48},
+    coupe:{coupe:true,t:14,b:36,tl:10,tr:54,bl:30,br:34}
+  };
+  function shape(v){
+    if(v.coupe) return 'M10 14 L54 14 Q54 36 32 36 Q10 36 10 14 Z';
+    return 'M'+v.tl+' '+v.t+' L'+v.tr+' '+v.t+' L'+v.br+' '+v.b+' Q32 '+(v.b+1.5)+' '+v.bl+' '+v.b+' Z';
+  }
+  var uid=0;
+  function cup(spec){
+    var v=V[spec.v], id='cl'+(uid++), h=v.b-v.t, y=v.b+1, s='';
+    s+='<defs><clipPath id="'+id+'"><path d="'+shape(v)+'"/></clipPath></defs>';
+    if(v.saucer) s+='<ellipse cx="30" cy="'+(v.b+3)+'" rx="24" ry="3" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.6"/>';
+    if(v.coupe) s+='<path d="M32 36 L32 54 M22 56 L42 56" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" fill="none"/>';
+    s+='<path d="'+shape(v)+'" fill="var(--glass)"/>';
+    s+='<g clip-path="url(#'+id+')">';
+    spec.l.forEach(function(L){var hh=L[1]*h; y-=hh; s+='<rect x="0" y="'+y.toFixed(1)+'" width="64" height="'+(hh+0.6).toFixed(1)+'" fill="var(--c-'+L[0]+')"/>';});
+    if(spec.ice){[[22,y+4],[34,y+10],[26,y+20],[37,y+26]].forEach(function(p,i){ if(p[1]<v.b-6) s+='<rect x="'+p[0]+'" y="'+p[1].toFixed(1)+'" width="9" height="9" rx="2" transform="rotate('+(i*17-12)+' '+(p[0]+4.5)+' '+(p[1]+4.5)+')" fill="var(--c-ice)" fill-opacity=".55" stroke="var(--ink)" stroke-opacity=".25" stroke-width=".8"/>';});}
+    if(spec.scoop) s+='<circle cx="32" cy="'+(v.b-8)+'" r="11" fill="var(--c-icecream)"/>';
+    s+='</g>';
+    if(v.handle){var hd=v.handle; s+='<path d="M'+(hd[0]-1)+' '+hd[1]+' Q'+hd[2]+' '+hd[1]+' '+hd[2]+' '+((hd[1]+hd[3])/2)+' Q'+hd[2]+' '+hd[3]+' '+(hd[0]-3)+' '+hd[3]+'" fill="none" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round"/>';}
+    s+='<path d="'+shape(v)+'" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linejoin="round"/>';
+    return s;
+  }
+  function dripper(spec){
+    var s='', origami=spec.v==='origami', flat=spec.flat;
+    // jarra
+    s+='<path d="M16 40 L48 40 L46 60 Q32 62 18 60 Z" fill="var(--glass)"/>';
+    var lvl=spec.lvl||.5, top=60-20*lvl;
+    s+='<path d="M'+(18-(60-top)*0.1).toFixed(1)+' '+top.toFixed(1)+' L'+(46+(60-top)*0.1).toFixed(1)+' '+top.toFixed(1)+' L46 60 Q32 62 18 60 Z" fill="var(--c-'+(spec.ice?'americano':'brew')+')"/>';
+    if(spec.ice) s+='<rect x="22" y="48" width="8" height="8" rx="2" fill="var(--c-ice)" fill-opacity=".6"/><rect x="33" y="50" width="8" height="8" rx="2" fill="var(--c-ice)" fill-opacity=".6"/>';
+    s+='<path d="M16 40 L48 40 L46 60 Q32 62 18 60 Z" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linejoin="round"/>';
+    // filtro / cone
+    var cone=flat?'M8 6 L56 6 L40 34 L24 34 Z':'M8 6 L56 6 L33 36 L31 36 Z';
+    s+='<path d="'+cone+'" fill="var(--paper)"/>';
+    s+='<path d="'+(flat?'M17 20 L47 20 L40 34 L24 34 Z':'M17 18 L47 18 L33 36 L31 36 Z')+'" fill="var(--c-espresso)"/>';
+    if(origami){for(var i=0;i<9;i++){var x=12+i*5; s+='<path d="M'+x+' 6 L'+(flat?(25+i*1.75):32)+' '+(flat?34:36)+'" stroke="var(--accent)" stroke-opacity=".55" stroke-width="1"/>';}}
+    else{s+='<path d="M14 10 Q22 22 30 32 M50 10 Q42 22 34 32" stroke="var(--ink)" stroke-opacity=".3" stroke-width="1" fill="none"/>';}
+    s+='<path d="'+cone+'" fill="none" stroke="'+(origami?'var(--accent)':'var(--ink)')+'" stroke-width="2" stroke-linejoin="round"/>';
+    s+='<path d="M10 38 L54 38" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round"/>';
+    // gotas
+    s+='<circle cx="32" cy="42" r="1.4" fill="var(--c-brew)"/>';
+    return s;
+  }
+  var D={
+    'Espresso simples':{v:'demi',l:[['espresso',.42],['crema',.13]]},
+    'Espresso duplo':{v:'demi',l:[['espresso',.62],['crema',.16]]},
+    'Ristretto':{v:'demi',l:[['espresso',.34],['crema',.13]]},
+    'Lungo':{v:'cup',l:[['espresso',.5],['crema',.1]]},
+    'Americano':{v:'cup',l:[['americano',.74],['crema',.07]]},
+    'Affogato':{v:'short',l:[['espresso',.38]],scoop:true},
+    'Macchiato':{v:'demi',l:[['espresso',.55],['foam',.2]]},
+    'Cortado':{v:'short',l:[['espresso',.4],['milkcoffee',.38],['foam',.06]]},
+    'Flat white':{v:'cup',l:[['espresso',.28],['milkcoffee',.52],['foam',.07]]},
+    'Cappuccino':{v:'cup',l:[['espresso',.28],['milkcoffee',.38],['foam',.24]]},
+    'Latte':{v:'glass',l:[['espresso',.18],['milkcoffee',.6],['foam',.1]]},
+    'Mocha':{v:'mug',l:[['choc',.14],['espresso',.18],['milkcoffee',.46],['foam',.08]]},
+    'Espresso tônica':{v:'glass',l:[['tonic',.55],['espresso',.25]],ice:true},
+    'Shakerato':{v:'coupe',l:[['espresso',.68],['foam',.22]]},
+    'Iced latte':{v:'glass',l:[['milk',.52],['espresso',.28]],ice:true},
+    'V60 do dia a dia':{v:'v60',lvl:.55},
+    '4:6 (Tetsu Kasuya)':{v:'v60',lvl:.65},
+    'V60 gelada':{v:'v60',lvl:.6,ice:true},
+    'Origami com filtro cônico':{v:'origami',lvl:.55},
+    'Origami com filtro de fundo plano':{v:'origami',flat:true,lvl:.65},
+    'Origami para dois':{v:'origami',flat:true,lvl:.9}
+  };
+  function svg(spec,label){
+    var inner=V[spec.v]?cup(spec):dripper(spec);
+    return '<svg viewBox="0 0 64 64" role="img" aria-label="'+label+'">'+inner+'</svg>';
+  }
+  document.querySelectorAll('details').forEach(function(d){
+    var n=d.querySelector('.name'); if(!n) return;
+    var name=n.textContent.trim(), spec=D[name]; if(!spec) return;
+    var t=document.createElement('span'); t.className='thumb'; t.innerHTML=svg(spec,'Ilustração: '+name);
+    d.querySelector('summary').prepend(t);
+    if(spec.l){
+      var leg=[], seen={};
+      spec.l.slice().reverse().forEach(function(L){ if(!seen[L[0]]){seen[L[0]]=1; leg.push('<li><i style="background:var(--c-'+L[0]+')"></i>'+NAMES[L[0]]+'</li>');} });
+      if(spec.scoop) leg.push('<li><i style="background:var(--c-icecream)"></i>'+NAMES.icecream+'</li>');
+      if(spec.ice) leg.push('<li><i style="background:var(--c-ice)"></i>'+NAMES.ice+'</li>');
+      var f=document.createElement('div'); f.className='fig';
+      f.innerHTML=svg(spec,'Camadas: '+name)+'<ul class="legend" aria-label="Camadas, de cima para baixo">'+leg.join('')+'</ul>';
+      d.querySelector('.recipe').prepend(f);
+    }
+  });
+})();
+</script>
+</body>
+</html>
