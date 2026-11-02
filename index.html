@@ -37,7 +37,7 @@ img{max-width:100%}
   --accent-soft:#F1DEDD;
   --crema:#B9844A;
   --c-espresso:#3B2116; --c-crema:#C08A52; --c-milk:#F6F1E7; --c-milkcoffee:#C9A07A; --c-foam:#FBF8F2;
-  --c-americano:#5A3424; --c-choc:#4A2A1E; --c-tonic:#E4EEF0; --c-icecream:#F3E6C4; --c-ice:#FFFFFF; --c-brew:#7A3E1F;
+  --c-americano:#5A3424; --c-choc:#4A2A1E; --c-tonic:#E4EEF0; --c-icecream:#F3E6C4; --c-ice:#FFFFFF; --c-ddl:#A8642B; --c-brew:#7A3E1F;
   --glass:rgba(140,150,150,.10);
   --font-display:"Young Serif", Georgia, "Times New Roman", serif;
   --font-body:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -310,6 +310,19 @@ html{scroll-behavior:smooth}
       </ol>
     </div>
   </details>
+  <details>
+    <summary><span class="name">Latte de doce de leite</span><span class="ratio">duplo + 20 g + 180 ml</span><span class="desc">Mocha à brasileira: doce de leite derretido no espresso e leite vaporizado.</span></summary>
+    <div class="recipe">
+      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Doce de leite</b><span>20 g</span></div><div class="spec"><b>Leite</b><span>180 ml</span></div><div class="spec"><b>Temp. leite</b><span>60 °C</span></div></div>
+      <ol class="steps">
+        <li><span>Coloque <span class="t">20 g</span> de doce de leite na caneca. Dá uma colher de sopa cheia.</span></li>
+        <li><span>Extraia o duplo (18 g → 36 g) por cima e mexa até dissolver.</span></li>
+        <li><span>Complete com o leite vaporizado a <span class="t">60 °C</span>.</span></li>
+        <li><span>Se quiser, finalize com um fio de doce de leite e uma pitada de flor de sal na espuma.</span></li>
+      </ol>
+      <p class="tip">Use doce de leite cremoso, de pote. O de corte dissolve pior: se for usar, amorne por 10 s no micro-ondas.</p>
+    </div>
+  </details>
 </section>
 
 <!-- GELADOS -->
@@ -348,6 +361,18 @@ html{scroll-behavior:smooth}
         <li><span>Gelo no copo, depois o leite.</span></li>
         <li><span>Despeje o duplo por cima. Mexa antes de beber.</span></li>
       </ol>
+    </div>
+  </details>
+  <details>
+    <summary><span class="name">Iced latte de doce de leite</span><span class="ratio">duplo + 20 g + 180 ml frio</span><span class="desc">A versão gelada: doce de leite dissolvido no espresso quente, sobre gelo e leite.</span></summary>
+    <div class="recipe">
+      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Doce de leite</b><span>20 g</span></div><div class="spec"><b>Leite</b><span>180 ml gelado</span></div><div class="spec"><b>Gelo</b><span>copo cheio</span></div></div>
+      <ol class="steps">
+        <li><span>Extraia o duplo numa jarrinha com os <span class="t">20 g</span> de doce de leite e mexa até dissolver.</span></li>
+        <li><span>Encha o copo de gelo e coloque o leite gelado.</span></li>
+        <li><span>Despeje o espresso adoçado por cima. Mexa antes de beber.</span></li>
+      </ol>
+      <p class="tip">Dissolva sempre no espresso quente. Direto no leite gelado, o doce de leite empelota.</p>
     </div>
   </details>
 </section>
@@ -548,7 +573,7 @@ html{scroll-behavior:smooth}
 /* Ilustrações das bebidas: corte do copo mostrando as camadas */
 (function(){
   var NAMES={espresso:'Espresso',crema:'Crema',milk:'Leite',milkcoffee:'Leite com café',foam:'Espuma',
-    americano:'Café com água',choc:'Chocolate',tonic:'Tônica',icecream:'Sorvete',brew:'Café coado',ice:'Gelo'};
+    americano:'Café com água',choc:'Chocolate',tonic:'Tônica',icecream:'Sorvete',ddl:'Doce de leite',brew:'Café coado',ice:'Gelo'};
   // Recipientes: interior (y topo/fundo, x topo e fundo) + extras
   var V={
     demi:{t:30,b:50,tl:15,tr:45,bl:20,br:40,handle:[45,34,53,44],saucer:true},
@@ -614,6 +639,8 @@ html{scroll-behavior:smooth}
     'Espresso tônica':{v:'glass',l:[['tonic',.55],['espresso',.25]],ice:true},
     'Shakerato':{v:'coupe',l:[['espresso',.68],['foam',.22]]},
     'Iced latte':{v:'glass',l:[['milk',.52],['espresso',.28]],ice:true},
+    'Latte de doce de leite':{v:'mug',l:[['ddl',.14],['espresso',.18],['milkcoffee',.46],['foam',.08]]},
+    'Iced latte de doce de leite':{v:'glass',l:[['milk',.5],['espresso',.22],['ddl',.08]],ice:true},
     'V60 do dia a dia':{v:'v60',lvl:.55},
     '4:6 (Tetsu Kasuya)':{v:'v60',lvl:.65},
     'V60 gelada':{v:'v60',lvl:.6,ice:true},
