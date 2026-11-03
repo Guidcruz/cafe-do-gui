@@ -33,9 +33,10 @@ img{max-width:100%}
   --ink:#1F1A17;
   --muted:#6B655E;
   --line:#D3D2C8;
-  --accent:#8E1F2B;      /* cereja do café */
-  --accent-soft:#F1DEDD;
-  --crema:#B9844A;
+  --accent:#7B4A22;      /* caramelo torrado */
+  --accent-soft:#F0E4D4;
+  --crema:#A06A2C;
+  --ok:#2F6B3A; --warn:#A0520F;
   --c-espresso:#3B2116; --c-crema:#C08A52; --c-milk:#F6F1E7; --c-milkcoffee:#C9A07A; --c-foam:#FBF8F2;
   --c-americano:#5A3424; --c-choc:#4A2A1E; --c-tonic:#E4EEF0; --c-icecream:#F3E6C4; --c-ice:#FFFFFF; --c-ddl:#A8642B; --c-brew:#7A3E1F;
   --glass:rgba(140,150,150,.10);
@@ -46,12 +47,12 @@ img{max-width:100%}
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --bg:#171412; --paper:#221D1A; --ink:#EEE7DF; --muted:#A79D93; --line:#3A332E;
-    --accent:#E0717C; --accent-soft:#3A2225; --crema:#D3A26B; color-scheme:dark;
+    --accent:#E2AE72; --accent-soft:#3A2B1E; --crema:#CFA57A; --ok:#7CC48A; --warn:#E8A35A; color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
   --bg:#171412; --paper:#221D1A; --ink:#EEE7DF; --muted:#A79D93; --line:#3A332E;
-  --accent:#E0717C; --accent-soft:#3A2225; --crema:#D3A26B; color-scheme:dark;
+  --accent:#E2AE72; --accent-soft:#3A2B1E; --crema:#CFA57A; --ok:#7CC48A; --warn:#E8A35A; color-scheme:dark;
 }
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.55}
@@ -99,8 +100,8 @@ summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-
 details[open] .name{color:var(--accent)}
 
 .recipe{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:18px;margin:0 0 16px;display:flex;flex-direction:column;gap:16px}
-.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
-.spec{background:var(--paper);padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:0;background:var(--paper);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.spec{background:var(--paper);padding:10px 12px;display:flex;flex-direction:column;gap:2px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);margin:0 -1px -1px 0}
 .spec b{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:400}
 .spec span{font-family:var(--font-mono);font-weight:600;font-size:15px;font-variant-numeric:tabular-nums}
 ol.steps{margin:0;padding-left:0;list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:10px}
@@ -128,6 +129,49 @@ ol.steps li::before{content:counter(s);font-family:var(--font-mono);font-size:12
 .mode button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 .calc-note{margin:0;font-size:13.5px;color:var(--muted)}
 
+/* Timer */
+.timer{border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px;background:var(--bg)}
+.timer-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.clock{font:600 40px/1 var(--font-mono);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.clock.ok{color:var(--ok)} .clock.warn{color:var(--warn)}
+.timer-now{font-weight:700;font-size:17px}
+.timer-next{font-size:14px;color:var(--muted);min-height:1.4em}
+.bar{height:6px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s linear}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.btn{font:600 15px var(--font-body);border-radius:999px;padding:9px 18px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.danger{background:var(--warn);border-color:var(--warn);color:var(--paper)}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn:disabled{opacity:.45;cursor:default}
+
+/* Caderno */
+.nb-form{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.nb-form h3{margin:0;font-family:var(--font-display);font-weight:400;font-size:22px}
+.nb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.nb-grid .wide{grid-column:1/-1}
+.field textarea{font:400 16px var(--font-body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;width:100%;min-height:72px;resize:vertical}
+.field textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
+.field input[type="text"],.field input[type="date"]{font:500 16px var(--font-body)}
+.stars{display:flex;gap:4px}
+.stars button{font-size:26px;line-height:1;background:none;border:0;padding:2px;cursor:pointer;color:var(--line)}
+.stars button.on{color:var(--crema)}
+.stars button:focus-visible{outline:2px solid var(--accent);border-radius:4px}
+.nb-tools{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.nb-count{font-family:var(--font-mono);font-size:12px;color:var(--muted)}
+.nb-list{display:flex;flex-direction:column;gap:12px}
+.entry{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.entry-head{display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap}
+.entry h4{margin:0;font-size:17px}
+.entry .meta{font-size:13.5px;color:var(--muted)}
+.entry .rate{color:var(--crema);font-size:16px;letter-spacing:1px}
+.entry .nums{display:flex;flex-wrap:wrap;gap:6px}
+.entry .nums span{font-family:var(--font-mono);font-size:12.5px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;background:var(--bg)}
+.entry p{margin:0;font-size:14.5px;white-space:pre-wrap;overflow-wrap:anywhere}
+.entry .btns .btn{padding:6px 14px;font-size:13.5px}
+.empty{border:1px dashed var(--line);border-radius:12px;padding:22px;text-align:center;color:var(--muted)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
 /* Ajustes */
 .fix{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
 .fix div{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--paper)}
@@ -153,6 +197,7 @@ html{scroll-behavior:smooth}
   <a href="#gelados">Gelados</a>
   <a href="#v60">V60</a>
   <a href="#origami">Origami</a>
+  <a href="#caderno">Caderno</a>
   <a href="#calculadora">Calculadora</a>
   <a href="#ajustes">Ajustes</a>
 </nav>
@@ -472,6 +517,46 @@ html{scroll-behavior:smooth}
   </details>
 </section>
 
+<!-- CADERNO -->
+<section id="caderno">
+  <div class="sec-head"><h2>Caderno</h2><span class="sec-note">seus cafés e o ajuste que funcionou</span></div>
+  <form class="nb-form" id="nb-form" autocomplete="off">
+    <h3 id="nb-title">Nova anotação</h3>
+    <div class="nb-grid">
+      <div class="field wide"><label for="nb-cafe">Café</label><input id="nb-cafe" type="text" required placeholder="Ex.: Mantiqueira amarelo bourbon"></div>
+      <div class="field"><label for="nb-torref">Torrefação</label><input id="nb-torref" type="text" placeholder="Ex.: Café da fazenda"></div>
+      <div class="field"><label for="nb-origem">Origem / processo</label><input id="nb-origem" type="text" placeholder="Ex.: Sul de Minas, natural"></div>
+      <div class="field"><label for="nb-torra">Torra</label><select id="nb-torra"><option value="">—</option><option>Clara</option><option>Média-clara</option><option>Média</option><option>Média-escura</option><option>Escura</option></select></div>
+      <div class="field"><label for="nb-dtorra">Data de torra</label><input id="nb-dtorra" type="date"></div>
+      <div class="field"><label for="nb-dprep">Data do preparo</label><input id="nb-dprep" type="date"></div>
+      <div class="field wide"><label for="nb-metodo">Receita</label><select id="nb-metodo"></select></div>
+      <div class="field"><label for="nb-moagem">Moagem</label><input id="nb-moagem" type="text" placeholder="Ex.: 12 cliques"></div>
+      <div class="field"><label for="nb-dose">Café (g)</label><input id="nb-dose" type="number" inputmode="decimal" step="0.1" min="0"></div>
+      <div class="field"><label for="nb-rend">Bebida / água (g)</label><input id="nb-rend" type="number" inputmode="decimal" step="1" min="0"></div>
+      <div class="field"><label for="nb-tempo">Tempo</label><input id="nb-tempo" type="text" placeholder="Ex.: 28 s ou 3:10"></div>
+      <div class="field"><label for="nb-temp">Água (°C)</label><input id="nb-temp" type="number" inputmode="numeric" step="1" min="0" max="100"></div>
+      <div class="field wide"><span class="field-label" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">Nota</span>
+        <div class="stars" id="nb-stars" role="radiogroup" aria-label="Nota de 1 a 5"></div></div>
+      <div class="field wide"><label for="nb-obs">Sabor e próximos ajustes</label><textarea id="nb-obs" placeholder="Ex.: doce, chocolate ao leite. Próxima vez moer 1 clique mais fino."></textarea></div>
+    </div>
+    <div class="btns">
+      <button class="btn" type="submit" id="nb-save">Salvar anotação</button>
+      <button class="btn ghost" type="button" id="nb-cancel" hidden>Cancelar edição</button>
+    </div>
+    <p class="calc-note" id="nb-msg" role="status"></p>
+  </form>
+  <div class="nb-tools">
+    <span class="nb-count" id="nb-count"></span>
+    <div class="btns">
+      <button class="btn ghost" type="button" id="nb-export">Exportar backup</button>
+      <label class="btn ghost" for="nb-import" style="display:inline-block">Importar backup</label>
+      <input class="sr" id="nb-import" type="file" accept="application/json,.json">
+    </div>
+  </div>
+  <div class="nb-list" id="nb-list"></div>
+  <p class="calc-note">As anotações ficam salvas neste aparelho. Use "Exportar backup" para guardar uma cópia ou passar para outro celular.</p>
+</section>
+
 <!-- CALCULADORA -->
 <section id="calculadora">
   <div class="sec-head"><h2>Calculadora</h2><span class="sec-note">a partir do café ou da bebida pronta</span></div>
@@ -667,6 +752,229 @@ html{scroll-behavior:smooth}
       d.querySelector('.recipe').prepend(f);
     }
   });
+})();
+</script>
+<script>
+/* ---------- Timer ---------- */
+(function(){
+  var POUR={
+    'V60 do dia a dia':{end:200,steps:[[0,'Bloom: despeje até 45 g',45],[45,'Despeje em espiral até 150 g',150],[75,'Despeje até 250 g, pelo centro',250],[105,'Gire o suporte e deixe drenar',null]]},
+    '4:6 (Tetsu Kasuya)':{end:210,steps:[[0,'1º despejo: até 60 g',60],[45,'2º despejo: até 120 g',120],[90,'3º despejo: até 180 g',180],[135,'4º despejo: até 240 g',240],[180,'5º despejo: até 300 g',300],[195,'Deixe drenar',null]]},
+    'V60 gelada':{end:165,steps:[[0,'Bloom: despeje até 40 g',40],[45,'Despeje até 110 g',110],[75,'Despeje até 180 g',180],[100,'Deixe drenar sobre o gelo',null]]},
+    'Origami com filtro cônico':{end:165,steps:[[0,'Bloom: despeje até 40 g',40],[40,'Despeje até 110 g',110],[70,'Despeje até 185 g',185],[100,'Despeje até 260 g',260],[120,'Deixe drenar',null]]},
+    'Origami com filtro de fundo plano':{end:195,steps:[[0,'Bloom: despeje até 50 g',50],[40,'Pulso até 110 g',110],[65,'Pulso até 165 g',165],[90,'Pulso até 215 g',215],[115,'Pulso até 270 g',270],[135,'Pulso até 320 g',320],[150,'Deixe drenar',null]]},
+    'Origami para dois':{end:240,steps:[[0,'Bloom: despeje até 75 g',75],[45,'Pulso até 175 g',175],[75,'Pulso até 265 g',265],[105,'Pulso até 355 g',355],[135,'Pulso até 430 g',430],[165,'Pulso até 480 g',480],[180,'Deixe drenar',null]]}
+  };
+  var SHOT={
+    'Espresso simples':{min:25,max:30,stop:'18 g'},
+    'Espresso duplo':{min:25,max:30,stop:'36 g'},
+    'Ristretto':{min:18,max:22,stop:'22–27 g'},
+    'Lungo':{min:30,max:40,stop:'54 g'}
+  };
+  function mmss(t){t=Math.max(0,Math.floor(t));return Math.floor(t/60)+':'+String(t%60).padStart(2,'0');}
+  var actx=null;
+  function beep(n){
+    try{
+      actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+      for(var i=0;i<(n||1);i++){
+        var o=actx.createOscillator(),g=actx.createGain(),t0=actx.currentTime+i*0.22;
+        o.frequency.value=880;o.connect(g);g.connect(actx.destination);
+        g.gain.setValueAtTime(0.0001,t0);g.gain.exponentialRampToValueAtTime(0.25,t0+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t0+0.18);
+        o.start(t0);o.stop(t0+0.2);
+      }
+    }catch(e){}
+    try{navigator.vibrate&&navigator.vibrate(n>1?[120,80,120]:120);}catch(e){}
+  }
+  var lock=null;
+  function wake(on){
+    try{
+      if(on&&navigator.wakeLock&&!lock){navigator.wakeLock.request('screen').then(function(l){lock=l;}).catch(function(){});}
+      if(!on&&lock){lock.release().catch(function(){});lock=null;}
+    }catch(e){}
+  }
+  function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e;}
+
+  function pourTimer(box,cfg){
+    var clock=el('div','clock','0:00'), now=el('div','timer-now','Toque em Começar quando for despejar o bloom'),
+        next=el('div','timer-next',''), bar=el('div','bar'), fill=el('i'), top=el('div','timer-top'),
+        btns=el('div','btns'), go=el('button','btn','Começar'), reset=el('button','btn ghost','Zerar');
+    go.type=reset.type='button'; bar.appendChild(fill);
+    var left=el('div'); left.appendChild(clock);
+    btns.appendChild(go);btns.appendChild(reset); top.appendChild(left); top.appendChild(btns);
+    box.appendChild(top);box.appendChild(now);box.appendChild(next);box.appendChild(bar);
+    var t0=null,acc=0,raf=null,lastStep=-1,done=false;
+    function elapsed(){return acc+(t0?(performance.now()-t0)/1000:0);}
+    function render(){
+      var t=elapsed(), st=cfg.steps, i=0;
+      for(var k=0;k<st.length;k++) if(t>=st[k][0]) i=k;
+      if(i!==lastStep&&(t0||acc)){ if(lastStep!==-1) beep(1); lastStep=i; }
+      clock.textContent=mmss(t);
+      if(t>=cfg.end){
+        now.textContent='Pronto. Retire o coador e sirva.'; next.textContent='Tempo total '+mmss(t);
+        if(!done){done=true;beep(3);}
+      } else {
+        now.textContent=st[i][1];
+        if(st[i+1]) next.textContent='Próximo em '+mmss(st[i+1][0]-t)+': '+st[i+1][1];
+        else next.textContent='Termina por volta de '+mmss(cfg.end);
+      }
+      fill.style.width=Math.min(100,t/cfg.end*100)+'%';
+      if(t0) raf=requestAnimationFrame(render);
+    }
+    go.addEventListener('click',function(){
+      if(t0){acc=elapsed();t0=null;cancelAnimationFrame(raf);go.textContent='Continuar';wake(false);render();}
+      else{ if(acc===0){beep(1);lastStep=0;} t0=performance.now();go.textContent='Pausar';wake(true);render();}
+    });
+    reset.addEventListener('click',function(){
+      t0=null;acc=0;lastStep=-1;done=false;cancelAnimationFrame(raf);wake(false);go.textContent='Começar';
+      clock.textContent='0:00';now.textContent='Toque em Começar quando for despejar o bloom';next.textContent='';fill.style.width='0';
+    });
+  }
+
+  function shotTimer(box,cfg){
+    var clock=el('div','clock','0,0 s'), now=el('div','timer-now','Toque em Começar junto com a extração'),
+        next=el('div','timer-next','Alvo: '+cfg.min+'–'+cfg.max+' s, parar em '+cfg.stop), top=el('div','timer-top'),
+        btns=el('div','btns'), go=el('button','btn','Começar'), reset=el('button','btn ghost','Zerar');
+    go.type=reset.type='button'; btns.appendChild(go);btns.appendChild(reset);
+    var left=el('div'); left.appendChild(clock); top.appendChild(left); top.appendChild(btns);
+    box.appendChild(top);box.appendChild(now);box.appendChild(next);
+    var t0=null,raf=null,inWin=false;
+    function fmt(t){return t.toFixed(1).replace('.',',')+' s';}
+    function render(){
+      var t=(performance.now()-t0)/1000; clock.textContent=fmt(t);
+      clock.className='clock'+(t>=cfg.min&&t<=cfg.max?' ok':t>cfg.max?' warn':'');
+      if(t>=cfg.min&&!inWin){inWin=true;beep(1);now.textContent='Na janela: pare em '+cfg.stop;}
+      if(t>cfg.max) now.textContent='Passou do alvo';
+      raf=requestAnimationFrame(render);
+    }
+    go.addEventListener('click',function(){
+      if(t0){
+        cancelAnimationFrame(raf); var t=(performance.now()-t0)/1000; t0=null; wake(false); go.textContent='Começar';
+        clock.textContent=fmt(t);
+        if(t<cfg.min){clock.className='clock warn';now.textContent='Rápido: moa mais fino ou confira a dose';}
+        else if(t>cfg.max){clock.className='clock warn';now.textContent='Lento: moa mais grosso';}
+        else{clock.className='clock ok';now.textContent='Dentro do alvo';}
+      } else {
+        t0=performance.now(); inWin=false; wake(true); go.textContent='Parar'; now.textContent='Extraindo…'; render();
+      }
+    });
+    reset.addEventListener('click',function(){cancelAnimationFrame(raf);t0=null;wake(false);go.textContent='Começar';clock.textContent='0,0 s';clock.className='clock';now.textContent='Toque em Começar junto com a extração';});
+  }
+
+  document.querySelectorAll('details').forEach(function(d){
+    var n=d.querySelector('.name'); if(!n) return;
+    var name=n.textContent.trim(), r=d.querySelector('.recipe'); if(!r) return;
+    var box=el('div','timer'); box.setAttribute('aria-live','polite');
+    if(POUR[name]) pourTimer(box,POUR[name]); else if(SHOT[name]) shotTimer(box,SHOT[name]); else return;
+    var steps=r.querySelector('.steps'); r.insertBefore(box,steps);
+  });
+})();
+
+/* ---------- Caderno ---------- */
+(function(){
+  var KEY='cafe-do-gui:caderno', $=function(id){return document.getElementById(id);};
+  var list=[], editing=null, rating=0;
+  function load(){try{list=JSON.parse(localStorage.getItem(KEY)||'[]')||[];}catch(e){list=[];}}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(list));return true;}catch(e){return false;}}
+  function today(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+  function days(a,b){if(!a||!b)return null;var x=(new Date(b+'T12:00')-new Date(a+'T12:00'))/864e5;return Math.round(x);}
+  function br(d){if(!d)return '';var p=d.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
+  function msg(t){$('nb-msg').textContent=t;}
+
+  // receitas para o seletor
+  var sel=$('nb-metodo'); sel.innerHTML='<option value="">—</option>';
+  document.querySelectorAll('section').forEach(function(sec){
+    var h=sec.querySelector('h2'), names=sec.querySelectorAll('details .name'); if(!h||!names.length) return;
+    var og=document.createElement('optgroup'); og.label=h.textContent;
+    names.forEach(function(n){var o=document.createElement('option');o.textContent=n.textContent.trim();og.appendChild(o);});
+    sel.appendChild(og);
+  });
+
+  // estrelas
+  var stars=$('nb-stars');
+  for(var i=1;i<=5;i++){(function(v){
+    var b=document.createElement('button'); b.type='button'; b.textContent='★'; b.setAttribute('role','radio'); b.setAttribute('aria-label',v+(v>1?' estrelas':' estrela'));
+    b.addEventListener('click',function(){rating=(rating===v?0:v);paint();}); stars.appendChild(b);
+  })(i);}
+  function paint(){[].forEach.call(stars.children,function(b,i){b.classList.toggle('on',i<rating);b.setAttribute('aria-checked',i+1===rating);});}
+
+  var F=['cafe','torref','origem','torra','dtorra','dprep','metodo','moagem','dose','rend','tempo','temp','obs'];
+  function clear(){F.forEach(function(f){$('nb-'+f).value='';});$('nb-dprep').value=today();rating=0;paint();editing=null;
+    $('nb-title').textContent='Nova anotação';$('nb-save').textContent='Salvar anotação';$('nb-cancel').hidden=true;}
+
+  function render(){
+    var box=$('nb-list'); box.innerHTML='';
+    $('nb-count').textContent=list.length?(list.length+(list.length>1?' anotações':' anotação')):'';
+    if(!list.length){var e=document.createElement('div');e.className='empty';e.textContent='Nenhum café anotado ainda. Preencha o formulário acima para registrar o primeiro.';box.appendChild(e);return;}
+    list.slice().sort(function(a,b){return (b.dprep||'').localeCompare(a.dprep||'')||b.id-a.id;}).forEach(function(x){
+      var c=document.createElement('article'); c.className='entry';
+      var head=document.createElement('div'); head.className='entry-head';
+      var h=document.createElement('h4'); h.textContent=x.cafe+(x.torref?' · '+x.torref:''); head.appendChild(h);
+      if(x.nota){var r=document.createElement('span');r.className='rate';r.textContent='★★★★★'.slice(0,x.nota)+'☆☆☆☆☆'.slice(0,5-x.nota);r.setAttribute('aria-label',x.nota+' de 5');head.appendChild(r);}
+      c.appendChild(head);
+      var meta=[x.origem,x.torra?'torra '+x.torra.toLowerCase():'',x.metodo].filter(Boolean);
+      var dd=days(x.dtorra,x.dprep); var when=br(x.dprep)+(dd!=null&&dd>=0?' · '+dd+(dd===1?' dia':' dias')+' de torra':'');
+      var m=document.createElement('div');m.className='meta';m.textContent=[when].concat(meta).filter(Boolean).join(' · ');c.appendChild(m);
+      var nums=document.createElement('div');nums.className='nums';
+      [x.dose&&x.rend?x.dose+' g → '+x.rend+' g':x.dose?x.dose+' g':'', x.dose&&x.rend?'1 : '+(x.rend/x.dose).toFixed(1).replace('.',','):'', x.tempo, x.moagem?'moagem '+x.moagem:'', x.temp?x.temp+' °C':'']
+        .filter(Boolean).forEach(function(t){var s=document.createElement('span');s.textContent=t;nums.appendChild(s);});
+      if(nums.children.length) c.appendChild(nums);
+      if(x.obs){var p=document.createElement('p');p.textContent=x.obs;c.appendChild(p);}
+      var bt=document.createElement('div');bt.className='btns';
+      var ed=document.createElement('button');ed.type='button';ed.className='btn ghost';ed.textContent='Editar';
+      ed.addEventListener('click',function(){edit(x.id);});
+      var cp=document.createElement('button');cp.type='button';cp.className='btn ghost';cp.textContent='Repetir';
+      cp.title='Nova anotação com os mesmos dados';
+      cp.addEventListener('click',function(){fill(x);editing=null;$('nb-dprep').value=today();$('nb-obs').value='';rating=0;paint();
+        $('nb-title').textContent='Nova anotação (cópia)';$('nb-save').textContent='Salvar anotação';$('nb-cancel').hidden=false;$('nb-form').scrollIntoView({behavior:'smooth'});});
+      var del=document.createElement('button');del.type='button';del.className='btn ghost';del.textContent='Apagar';var armed=null;
+      del.addEventListener('click',function(){
+        if(armed){clearTimeout(armed);list=list.filter(function(y){return y.id!==x.id;});save();render();msg('Anotação apagada.');return;}
+        del.textContent='Toque de novo para apagar';del.className='btn danger';
+        armed=setTimeout(function(){armed=null;del.textContent='Apagar';del.className='btn ghost';},3000);
+      });
+      bt.appendChild(ed);bt.appendChild(cp);bt.appendChild(del);c.appendChild(bt);
+      box.appendChild(c);
+    });
+  }
+  function fill(x){F.forEach(function(f){$('nb-'+f).value=x[f]==null?'':x[f];});rating=x.nota||0;paint();}
+  function edit(id){var x=list.filter(function(y){return y.id===id;})[0];if(!x)return;fill(x);editing=id;
+    $('nb-title').textContent='Editando anotação';$('nb-save').textContent='Salvar alterações';$('nb-cancel').hidden=false;msg('');
+    $('nb-form').scrollIntoView({behavior:'smooth'});}
+
+  $('nb-form').addEventListener('submit',function(e){
+    e.preventDefault();
+    var x={}; F.forEach(function(f){x[f]=$('nb-'+f).value.trim();});
+    ['dose','rend','temp'].forEach(function(f){x[f]=x[f]===''?'':Number(String(x[f]).replace(',','.'));});
+    x.nota=rating;
+    if(!x.cafe){msg('Escreva o nome do café para salvar.');$('nb-cafe').focus();return;}
+    if(editing){x.id=editing;list=list.map(function(y){return y.id===editing?x:y;});}
+    else{x.id=Date.now();list.push(x);}
+    var ok=save(); render(); clear();
+    msg(ok?'Anotação salva.':'Não consegui salvar neste navegador. Exporte um backup para não perder.');
+  });
+  $('nb-cancel').addEventListener('click',function(){clear();msg('');});
+
+  $('nb-export').addEventListener('click',function(){
+    if(!list.length){msg('Ainda não há anotações para exportar.');return;}
+    var blob=new Blob([JSON.stringify({app:'cafe-do-gui',versao:1,exportado:new Date().toISOString(),anotacoes:list},null,2)],{type:'application/json'});
+    var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='cafe-do-gui-caderno-'+today()+'.json';
+    document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1000);
+    msg('Backup exportado.');
+  });
+  $('nb-import').addEventListener('change',function(){
+    var f=this.files[0]; if(!f) return; var rd=new FileReader();
+    rd.onload=function(){
+      try{
+        var d=JSON.parse(rd.result), arr=Array.isArray(d)?d:d.anotacoes; if(!Array.isArray(arr)) throw 0;
+        var ids={}; list.forEach(function(y){ids[y.id]=1;}); var n=0;
+        arr.forEach(function(y){if(y&&y.cafe&&!ids[y.id]){if(!y.id)y.id=Date.now()+n;list.push(y);n++;}});
+        save();render();msg(n?(n+(n>1?' anotações importadas.':' anotação importada.')):'Nada novo nesse arquivo: as anotações já estavam aqui.');
+      }catch(e){msg('Esse arquivo não é um backup do Caderno. Use o arquivo .json gerado por "Exportar backup".');}
+    };
+    rd.readAsText(f); this.value='';
+  });
+
+  load(); clear(); render();
 })();
 </script>
 <script>

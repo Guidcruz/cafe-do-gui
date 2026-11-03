@@ -1,5 +1,5 @@
 // Guarda o site para abrir mesmo sem internet. Busca a versão nova quando há conexão.
-const CACHE = 'cafe-do-gui-v4';
+const CACHE = 'cafe-do-gui-v5';
 const FILES = ['/', '/index.html', '/manifest.webmanifest', '/favicon.svg', '/icon-192.png', '/icon-512.png'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));
