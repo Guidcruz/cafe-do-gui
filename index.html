@@ -115,13 +115,15 @@ summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-
 .name{font-weight:700;font-size:18px;display:flex;align-items:baseline;gap:10px;min-width:0}
 .name::after{content:"";flex:1;border-bottom:1px dotted var(--muted);transform:translateY(-4px);opacity:.6;min-width:20px}
 .ratio{font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--accent);white-space:nowrap;font-variant-numeric:tabular-nums}
+.ratio .vol{color:var(--muted);font-weight:400}
+.spec.total span{color:var(--accent)}
 .desc{grid-column:2/-1;color:var(--muted);font-size:14.5px}
 @media (max-width:420px){.ratio{grid-column:2/-1}.name{font-size:17px}}
 details[open] .name{color:var(--accent)}
 
 .recipe{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:18px;margin:0 0 16px;display:flex;flex-direction:column;gap:16px}
-.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:0;background:var(--paper);border:1px solid var(--line);border-radius:8px;overflow:hidden}
-.spec{background:var(--paper);padding:10px 12px;display:flex;flex-direction:column;gap:2px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);margin:0 -1px -1px 0}
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.spec{background:var(--paper);padding:10px 12px;display:flex;flex-direction:column;gap:2px}
 .spec b{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:400}
 .spec span{font-family:var(--font-mono);font-weight:600;font-size:15px;font-variant-numeric:tabular-nums}
 ol.steps{margin:0;padding-left:0;list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:10px}
@@ -242,9 +244,9 @@ html{scroll-behavior:smooth}
   <div class="sec-head"><h2>Espresso</h2><span class="sec-note">9 bar · 92–94 °C</span></div>
 
   <details>
-    <summary><span class="name">Espresso simples</span><span class="ratio">9 g → 18 g</span><span class="desc">A dose curta da máquina. Bom para provar um café novo.</span></summary>
+    <summary><span class="name">Espresso simples</span><span class="ratio">9 g → 18 g<span class="vol"> · ≈ 20 ml</span></span><span class="desc">A dose curta da máquina. Bom para provar um café novo.</span></summary>
     <div class="recipe">
-      <div class="specs"><div class="spec"><b>Café</b><span>9 g</span></div><div class="spec"><b>Na xícara</b><span>18 g</span></div><div class="spec"><b>Proporção</b><span>1 : 2</span></div><div class="spec"><b>Tempo</b><span>25–30 s</span></div></div>
+      <div class="specs"><div class="spec"><b>Café</b><span>9 g</span></div><div class="spec"><b>Na xícara</b><span>18 g</span></div><div class="spec"><b>Proporção</b><span>1 : 2</span></div><div class="spec"><b>Tempo</b><span>25–30 s</span></div><div class="spec total"><b>Total</b><span>≈ 20 ml</span></div></div>
       <ol class="steps">
         <li><span>Pese 9 g e moa fino. Use o cesto simples.</span></li>
         <li><span>Distribua, nivele e compacte com pressão firme e reta.</span></li>
@@ -256,9 +258,9 @@ html{scroll-behavior:smooth}
   </details>
 
   <details>
-    <summary><span class="name">Espresso duplo</span><span class="ratio">18 g → 36 g</span><span class="desc">A base de quase tudo neste cardápio.</span></summary>
+    <summary><span class="name">Espresso duplo</span><span class="ratio">18 g → 36 g<span class="vol"> · ≈ 40 ml</span></span><span class="desc">A base de quase tudo neste cardápio.</span></summary>
     <div class="recipe">
-      <div class="specs"><div class="spec"><b>Café</b><span>18 g</span></div><div class="spec"><b>Na xícara</b><span>36 g</span></div><div class="spec"><b>Proporção</b><span>1 : 2</span></div><div class="spec"><b>Tempo</b><span>25–30 s</span></div></div>
+      <div class="specs"><div class="spec"><b>Café</b><span>18 g</span></div><div class="spec"><b>Na xícara</b><span>36 g</span></div><div class="spec"><b>Proporção</b><span>1 : 2</span></div><div class="spec"><b>Tempo</b><span>25–30 s</span></div><div class="spec total"><b>Total</b><span>≈ 40 ml</span></div></div>
       <ol class="steps">
         <li><span>Pese 18 g, moa fino e use o cesto duplo.</span></li>
         <li><span>Distribua com WDT ou batidinhas laterais e compacte nivelado.</span></li>
@@ -270,9 +272,9 @@ html{scroll-behavior:smooth}
   </details>
 
   <details>
-    <summary><span class="name">Ristretto</span><span class="ratio">18 g → 22–27 g</span><span class="desc">Mais curto, denso e doce. Pouco amargor.</span></summary>
+    <summary><span class="name">Ristretto</span><span class="ratio">18 g → 22–27 g<span class="vol"> · ≈ 25–30 ml</span></span><span class="desc">Mais curto, denso e doce. Pouco amargor.</span></summary>
     <div class="recipe">
-      <div class="specs"><div class="spec"><b>Café</b><span>18 g</span></div><div class="spec"><b>Na xícara</b><span>22–27 g</span></div><div class="spec"><b>Proporção</b><span>1 : 1,3</span></div><div class="spec"><b>Tempo</b><span>18–22 s</span></div></div>
+      <div class="specs"><div class="spec"><b>Café</b><span>18 g</span></div><div class="spec"><b>Na xícara</b><span>22–27 g</span></div><div class="spec"><b>Proporção</b><span>1 : 1,3</span></div><div class="spec"><b>Tempo</b><span>18–22 s</span></div><div class="spec total"><b>Total</b><span>≈ 25–30 ml</span></div></div>
       <ol class="steps">
         <li><span>Mesmo preparo do duplo, moagem igual ou um pouco mais fina.</span></li>
         <li><span>Corte a extração em <span class="t">22–27 g</span>.</span></li>
@@ -282,9 +284,9 @@ html{scroll-behavior:smooth}
   </details>
 
   <details>
-    <summary><span class="name">Lungo</span><span class="ratio">18 g → 54 g</span><span class="desc">Mais longo e leve, sem perder corpo. Funciona melhor com torras claras.</span></summary>
+    <summary><span class="name">Lungo</span><span class="ratio">18 g → 54 g<span class="vol"> · ≈ 60 ml</span></span><span class="desc">Mais longo e leve, sem perder corpo. Funciona melhor com torras claras.</span></summary>
     <div class="recipe">
-      <div class="specs"><div class="spec"><b>Café</b><span>18 g</span></div><div class="spec"><b>Na xícara</b><span>54 g</span></div><div class="spec"><b>Proporção</b><span>1 : 3</span></div><div class="spec"><b>Tempo</b><span>30–40 s</span></div></div>
+      <div class="specs"><div class="spec"><b>Café</b><span>18 g</span></div><div class="spec"><b>Na xícara</b><span>54 g</span></div><div class="spec"><b>Proporção</b><span>1 : 3</span></div><div class="spec"><b>Tempo</b><span>30–40 s</span></div><div class="spec total"><b>Total</b><span>≈ 60 ml</span></div></div>
       <ol class="steps">
         <li><span>Moa um pouco mais grosso que o duplo.</span></li>
         <li><span>Extraia até <span class="t">54 g</span>. Se passar de 40 s, engrosse a moagem.</span></li>
@@ -294,9 +296,9 @@ html{scroll-behavior:smooth}
   </details>
 
   <details>
-    <summary><span class="name">Americano</span><span class="ratio">duplo + 120 ml</span><span class="desc">Espresso diluído em água quente. Limpo e longo.</span></summary>
+    <summary><span class="name">Americano</span><span class="ratio">duplo + 120 ml<span class="vol"> · ≈ 160–190 ml</span></span><span class="desc">Espresso diluído em água quente. Limpo e longo.</span></summary>
     <div class="recipe">
-      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Água</b><span>120–150 ml</span></div><div class="spec"><b>Temp. água</b><span>85–90 °C</span></div></div>
+      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Água</b><span>120–150 ml</span></div><div class="spec"><b>Temp. água</b><span>85–90 °C</span></div><div class="spec total"><b>Total</b><span>≈ 160–190 ml</span></div></div>
       <ol class="steps">
         <li><span>Coloque a água quente na xícara primeiro.</span></li>
         <li><span>Extraia o duplo por cima. Assim a crema fica na superfície.</span></li>
@@ -305,9 +307,9 @@ html{scroll-behavior:smooth}
   </details>
 
   <details>
-    <summary><span class="name">Affogato</span><span class="ratio">duplo + 1 bola</span><span class="desc">Espresso quente sobre sorvete de creme. Sobremesa em 30 segundos.</span></summary>
+    <summary><span class="name">Affogato</span><span class="ratio">duplo + 1 bola<span class="vol"> · ≈ 140 ml</span></span><span class="desc">Espresso quente sobre sorvete de creme. Sobremesa em 30 segundos.</span></summary>
     <div class="recipe">
-      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Sorvete</b><span>1 bola (≈ 60 g)</span></div></div>
+      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Sorvete</b><span>1 bola (≈ 60 g)</span></div><div class="spec total"><b>Total</b><span>≈ 140 ml</span></div></div>
       <ol class="steps">
         <li><span>Coloque a bola de sorvete num copo baixo gelado.</span></li>
         <li><span>Extraia o duplo numa jarrinha e despeje por cima na hora de servir.</span></li>
@@ -322,9 +324,9 @@ html{scroll-behavior:smooth}
   <div class="sec-head"><h2>Com leite</h2><span class="sec-note">leite a 55–65 °C</span></div>
 
   <details>
-    <summary><span class="name">Macchiato</span><span class="ratio">simples + espuma</span><span class="desc">Espresso “manchado” com uma colher de espuma de leite.</span></summary>
+    <summary><span class="name">Macchiato</span><span class="ratio">simples + espuma<span class="vol"> · ≈ 40 ml</span></span><span class="desc">Espresso “manchado” com uma colher de espuma de leite.</span></summary>
     <div class="recipe">
-      <div class="specs"><div class="spec"><b>Espresso</b><span>9 → 18 g</span></div><div class="spec"><b>Leite</b><span>1–2 colheres de espuma</span></div><div class="spec"><b>Xícara</b><span>60–90 ml</span></div></div>
+      <div class="specs"><div class="spec"><b>Espresso</b><span>9 → 18 g</span></div><div class="spec"><b>Leite</b><span>1–2 colheres de espuma</span></div><div class="spec"><b>Xícara</b><span>60–90 ml</span></div><div class="spec total"><b>Total</b><span>≈ 40 ml</span></div></div>
       <ol class="steps">
         <li><span>Extraia o simples (9 g → 18 g) ou o duplo, se quiser mais forte.</span></li>
         <li><span>Vaporize um pouco de leite com bastante ar e coloque só a espuma por cima.</span></li>
@@ -333,9 +335,9 @@ html{scroll-behavior:smooth}
   </details>
 
   <details>
-    <summary><span class="name">Cortado</span><span class="ratio">duplo + 40 ml</span><span class="desc">Meio a meio. O café ainda manda.</span></summary>
+    <summary><span class="name">Cortado</span><span class="ratio">duplo + 40 ml<span class="vol"> · ≈ 80–100 ml</span></span><span class="desc">Meio a meio. O café ainda manda.</span></summary>
     <div class="recipe">
-      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Leite</b><span>40–60 ml</span></div><div class="spec"><b>Copo</b><span>120 ml</span></div></div>
+      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Leite</b><span>40–60 ml</span></div><div class="spec"><b>Copo</b><span>120 ml</span></div><div class="spec total"><b>Total</b><span>≈ 80–100 ml</span></div></div>
       <ol class="steps">
         <li><span>Extraia o duplo num copo pequeno de vidro.</span></li>
         <li><span>Vaporize o leite com pouquíssimo ar (quase sem espuma) e complete.</span></li>
@@ -344,9 +346,9 @@ html{scroll-behavior:smooth}
   </details>
 
   <details>
-    <summary><span class="name">Flat white</span><span class="ratio">ristretto + 120 ml</span><span class="desc">Microespuma fina e brilhante, sabor de café presente.</span></summary>
+    <summary><span class="name">Flat white</span><span class="ratio">ristretto + 120 ml<span class="vol"> · ≈ 160 ml</span></span><span class="desc">Microespuma fina e brilhante, sabor de café presente.</span></summary>
     <div class="recipe">
-      <div class="specs"><div class="spec"><b>Espresso</b><span>ristretto 18 → 27 g</span></div><div class="spec"><b>Leite</b><span>110–130 ml</span></div><div class="spec"><b>Espuma</b><span>≈ 0,5 cm</span></div></div>
+      <div class="specs"><div class="spec"><b>Espresso</b><span>ristretto 18 → 27 g</span></div><div class="spec"><b>Leite</b><span>110–130 ml</span></div><div class="spec"><b>Espuma</b><span>≈ 0,5 cm</span></div><div class="spec total"><b>Total</b><span>≈ 160 ml</span></div></div>
       <ol class="steps">
         <li><span>Extraia o ristretto numa xícara de 160 ml.</span></li>
         <li><span>Vaporize o leite incorporando ar só por <span class="t">2–3 s</span>, depois gire até 60 °C.</span></li>
@@ -356,9 +358,9 @@ html{scroll-behavior:smooth}
   </details>
 
   <details>
-    <summary><span class="name">Cappuccino</span><span class="ratio">duplo + 150 ml</span><span class="desc">Espuma mais alta e aveludada. Clássico da manhã.</span></summary>
+    <summary><span class="name">Cappuccino</span><span class="ratio">duplo + 150 ml<span class="vol"> · ≈ 180–200 ml</span></span><span class="desc">Espuma mais alta e aveludada. Clássico da manhã.</span></summary>
     <div class="recipe">
-      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Leite</b><span>130–150 ml</span></div><div class="spec"><b>Espuma</b><span>1–1,5 cm</span></div></div>
+      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Leite</b><span>130–150 ml</span></div><div class="spec"><b>Espuma</b><span>1–1,5 cm</span></div><div class="spec total"><b>Total</b><span>≈ 180–200 ml</span></div></div>
       <ol class="steps">
         <li><span>Extraia o duplo numa xícara de 180–200 ml.</span></li>
         <li><span>Vaporize incorporando ar por <span class="t">5–6 s</span> (som de “papel rasgando”), depois gire até 60–65 °C.</span></li>
@@ -369,9 +371,9 @@ html{scroll-behavior:smooth}
   </details>
 
   <details>
-    <summary><span class="name">Latte</span><span class="ratio">duplo + 220 ml</span><span class="desc">Mais leite, mais suave. Bom para torras médias e escuras.</span></summary>
+    <summary><span class="name">Latte</span><span class="ratio">duplo + 220 ml<span class="vol"> · ≈ 260–300 ml</span></span><span class="desc">Mais leite, mais suave. Bom para torras médias e escuras.</span></summary>
     <div class="recipe">
-      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Leite</b><span>200–240 ml</span></div><div class="spec"><b>Espuma</b><span>≈ 0,5–1 cm</span></div></div>
+      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Leite</b><span>200–240 ml</span></div><div class="spec"><b>Espuma</b><span>≈ 0,5–1 cm</span></div><div class="spec total"><b>Total</b><span>≈ 260–300 ml</span></div></div>
       <ol class="steps">
         <li><span>Extraia o duplo num copo ou caneca de 300 ml.</span></li>
         <li><span>Vaporize com pouco ar, até 60 °C, e despeje devagar.</span></li>
@@ -380,9 +382,9 @@ html{scroll-behavior:smooth}
   </details>
 
   <details>
-    <summary><span class="name">Mocha</span><span class="ratio">duplo + cacau + 180 ml</span><span class="desc">Latte com chocolate. Doce de inverno.</span></summary>
+    <summary><span class="name">Mocha</span><span class="ratio">duplo + cacau + 180 ml<span class="vol"> · ≈ 240 ml</span></span><span class="desc">Latte com chocolate. Doce de inverno.</span></summary>
     <div class="recipe">
-      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Chocolate</b><span>15–20 g</span></div><div class="spec"><b>Leite</b><span>180 ml</span></div></div>
+      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Chocolate</b><span>15–20 g</span></div><div class="spec"><b>Leite</b><span>180 ml</span></div><div class="spec total"><b>Total</b><span>≈ 240 ml</span></div></div>
       <ol class="steps">
         <li><span>Coloque o chocolate (em pó 50% ou ganache) na caneca.</span></li>
         <li><span>Extraia o duplo por cima e mexa até dissolver.</span></li>
@@ -391,9 +393,9 @@ html{scroll-behavior:smooth}
     </div>
   </details>
   <details>
-    <summary><span class="name">Latte de doce de leite</span><span class="ratio">duplo + 20 g + 180 ml</span><span class="desc">Mocha à brasileira: doce de leite derretido no espresso e leite vaporizado.</span></summary>
+    <summary><span class="name">Latte de doce de leite</span><span class="ratio">duplo + 20 g + 180 ml<span class="vol"> · ≈ 240 ml</span></span><span class="desc">Mocha à brasileira: doce de leite derretido no espresso e leite vaporizado.</span></summary>
     <div class="recipe">
-      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Doce de leite</b><span>20 g</span></div><div class="spec"><b>Leite</b><span>180 ml</span></div><div class="spec"><b>Temp. leite</b><span>60 °C</span></div></div>
+      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Doce de leite</b><span>20 g</span></div><div class="spec"><b>Leite</b><span>180 ml</span></div><div class="spec"><b>Temp. leite</b><span>60 °C</span></div><div class="spec total"><b>Total</b><span>≈ 240 ml</span></div></div>
       <ol class="steps">
         <li><span>Coloque <span class="t">20 g</span> de doce de leite na caneca. Dá uma colher de sopa cheia.</span></li>
         <li><span>Extraia o duplo (18 g → 36 g) por cima e mexa até dissolver.</span></li>
@@ -410,9 +412,9 @@ html{scroll-behavior:smooth}
   <div class="sec-head"><h2>Gelados</h2><span class="sec-note">gelo sempre por último no shaker, primeiro no copo</span></div>
 
   <details>
-    <summary><span class="name">Espresso tônica</span><span class="ratio">duplo + 150 ml</span><span class="desc">Amargo, cítrico e efervescente. Prefira um café frutado.</span></summary>
+    <summary><span class="name">Espresso tônica</span><span class="ratio">duplo + 150 ml<span class="vol"> · ≈ 190 ml</span></span><span class="desc">Amargo, cítrico e efervescente. Prefira um café frutado.</span></summary>
     <div class="recipe">
-      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Tônica</b><span>150 ml gelada</span></div><div class="spec"><b>Gelo</b><span>copo cheio</span></div></div>
+      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Tônica</b><span>150 ml gelada</span></div><div class="spec"><b>Gelo</b><span>copo cheio</span></div><div class="spec total"><b>Total</b><span>≈ 190 ml + gelo</span></div></div>
       <ol class="steps">
         <li><span>Encha o copo de gelo e coloque a tônica.</span></li>
         <li><span>Extraia o duplo numa jarrinha e despeje devagar, sobre o gelo, para formar camadas.</span></li>
@@ -422,9 +424,9 @@ html{scroll-behavior:smooth}
   </details>
 
   <details>
-    <summary><span class="name">Shakerato</span><span class="ratio">duplo + gelo + xarope</span><span class="desc">Espresso batido com gelo até espumar. Servido em taça.</span></summary>
+    <summary><span class="name">Shakerato</span><span class="ratio">duplo + gelo + xarope<span class="vol"> · ≈ 80 ml</span></span><span class="desc">Espresso batido com gelo até espumar. Servido em taça.</span></summary>
     <div class="recipe">
-      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Xarope</b><span>10 ml (opcional)</span></div><div class="spec"><b>Gelo</b><span>5–6 cubos</span></div></div>
+      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Xarope</b><span>10 ml (opcional)</span></div><div class="spec"><b>Gelo</b><span>5–6 cubos</span></div><div class="spec total"><b>Total</b><span>≈ 80 ml</span></div></div>
       <ol class="steps">
         <li><span>Extraia o duplo direto na coqueteleira com o xarope.</span></li>
         <li><span>Adicione o gelo e bata forte por <span class="t">15 s</span>.</span></li>
@@ -434,9 +436,9 @@ html{scroll-behavior:smooth}
   </details>
 
   <details>
-    <summary><span class="name">Iced latte</span><span class="ratio">duplo + 180 ml frio</span><span class="desc">Leite gelado e espresso por cima.</span></summary>
+    <summary><span class="name">Iced latte</span><span class="ratio">duplo + 180 ml frio<span class="vol"> · ≈ 220 ml</span></span><span class="desc">Leite gelado e espresso por cima.</span></summary>
     <div class="recipe">
-      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Leite</b><span>180 ml gelado</span></div><div class="spec"><b>Gelo</b><span>copo cheio</span></div></div>
+      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Leite</b><span>180 ml gelado</span></div><div class="spec"><b>Gelo</b><span>copo cheio</span></div><div class="spec total"><b>Total</b><span>≈ 220 ml + gelo</span></div></div>
       <ol class="steps">
         <li><span>Gelo no copo, depois o leite.</span></li>
         <li><span>Despeje o duplo por cima. Mexa antes de beber.</span></li>
@@ -444,9 +446,9 @@ html{scroll-behavior:smooth}
     </div>
   </details>
   <details>
-    <summary><span class="name">Iced latte de doce de leite</span><span class="ratio">duplo + 20 g + 180 ml frio</span><span class="desc">A versão gelada: doce de leite dissolvido no espresso quente, sobre gelo e leite.</span></summary>
+    <summary><span class="name">Iced latte de doce de leite</span><span class="ratio">duplo + 20 g + 180 ml frio<span class="vol"> · ≈ 235 ml</span></span><span class="desc">A versão gelada: doce de leite dissolvido no espresso quente, sobre gelo e leite.</span></summary>
     <div class="recipe">
-      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Doce de leite</b><span>20 g</span></div><div class="spec"><b>Leite</b><span>180 ml gelado</span></div><div class="spec"><b>Gelo</b><span>copo cheio</span></div></div>
+      <div class="specs"><div class="spec"><b>Espresso</b><span>36 g</span></div><div class="spec"><b>Doce de leite</b><span>20 g</span></div><div class="spec"><b>Leite</b><span>180 ml gelado</span></div><div class="spec"><b>Gelo</b><span>copo cheio</span></div><div class="spec total"><b>Total</b><span>≈ 235 ml + gelo</span></div></div>
       <ol class="steps">
         <li><span>Extraia o duplo numa jarrinha com os <span class="t">20 g</span> de doce de leite e mexa até dissolver.</span></li>
         <li><span>Encha o copo de gelo e coloque o leite gelado.</span></li>
@@ -462,9 +464,9 @@ html{scroll-behavior:smooth}
   <div class="sec-head"><h2>V60</h2><span class="sec-note">filtro cônico · moagem média-fina</span></div>
 
   <details>
-    <summary><span class="name">V60 do dia a dia</span><span class="ratio">15 g → 250 g</span><span class="desc">Receita equilibrada para uma xícara, com dois despejos.</span></summary>
+    <summary><span class="name">V60 do dia a dia</span><span class="ratio">15 g → 250 g<span class="vol"> · ≈ 220 ml</span></span><span class="desc">Receita equilibrada para uma xícara, com dois despejos.</span></summary>
     <div class="recipe">
-      <div class="specs"><div class="spec"><b>Café</b><span>15 g</span></div><div class="spec"><b>Água</b><span>250 g</span></div><div class="spec"><b>Proporção</b><span>1 : 16,7</span></div><div class="spec"><b>Água</b><span>93–96 °C</span></div><div class="spec"><b>Total</b><span>≈ 3:00–3:30</span></div></div>
+      <div class="specs"><div class="spec"><b>Café</b><span>15 g</span></div><div class="spec"><b>Água</b><span>250 g</span></div><div class="spec"><b>Proporção</b><span>1 : 16,7</span></div><div class="spec"><b>Água</b><span>93–96 °C</span></div><div class="spec"><b>Tempo</b><span>≈ 3:00–3:30</span></div><div class="spec total"><b>Total</b><span>≈ 220 ml</span></div></div>
       <ol class="steps">
         <li><span>Enxágue o filtro com água quente e descarte. Moa médio-fino (sal refinado a sal grosso).</span></li>
         <li><span><span class="t">0:00</span> Bloom com 30–45 g. Gire o suporte para molhar tudo.</span></li>
@@ -477,9 +479,9 @@ html{scroll-behavior:smooth}
   </details>
 
   <details>
-    <summary><span class="name">4:6 (Tetsu Kasuya)</span><span class="ratio">20 g → 300 g</span><span class="desc">Cinco despejos iguais. Você ajusta doçura e corpo pelo ritmo.</span></summary>
+    <summary><span class="name">4:6 (Tetsu Kasuya)</span><span class="ratio">20 g → 300 g<span class="vol"> · ≈ 260 ml</span></span><span class="desc">Cinco despejos iguais. Você ajusta doçura e corpo pelo ritmo.</span></summary>
     <div class="recipe">
-      <div class="specs"><div class="spec"><b>Café</b><span>20 g</span></div><div class="spec"><b>Água</b><span>300 g</span></div><div class="spec"><b>Proporção</b><span>1 : 15</span></div><div class="spec"><b>Moagem</b><span>grossa</span></div><div class="spec"><b>Total</b><span>≈ 3:30</span></div></div>
+      <div class="specs"><div class="spec"><b>Café</b><span>20 g</span></div><div class="spec"><b>Água</b><span>300 g</span></div><div class="spec"><b>Proporção</b><span>1 : 15</span></div><div class="spec"><b>Moagem</b><span>grossa</span></div><div class="spec"><b>Tempo</b><span>≈ 3:30</span></div><div class="spec total"><b>Total</b><span>≈ 260 ml</span></div></div>
       <ol class="steps">
         <li><span><span class="t">0:00</span> 60 g (até 60 g).</span></li>
         <li><span><span class="t">0:45</span> 60 g (até 120 g). Estes dois primeiros definem o sabor: primeiro maior = mais doce, primeiro menor = mais ácido.</span></li>
@@ -492,9 +494,9 @@ html{scroll-behavior:smooth}
   </details>
 
   <details>
-    <summary><span class="name">V60 gelada</span><span class="ratio">20 g → 180 g + 120 g gelo</span><span class="desc">Método japonês: o café quente cai direto no gelo e preserva o aroma.</span></summary>
+    <summary><span class="name">V60 gelada</span><span class="ratio">20 g → 180 g + 120 g gelo<span class="vol"> · ≈ 260 ml</span></span><span class="desc">Método japonês: o café quente cai direto no gelo e preserva o aroma.</span></summary>
     <div class="recipe">
-      <div class="specs"><div class="spec"><b>Café</b><span>20 g</span></div><div class="spec"><b>Água quente</b><span>180 g</span></div><div class="spec"><b>Gelo na jarra</b><span>120 g</span></div><div class="spec"><b>Moagem</b><span>mais fina</span></div></div>
+      <div class="specs"><div class="spec"><b>Café</b><span>20 g</span></div><div class="spec"><b>Água quente</b><span>180 g</span></div><div class="spec"><b>Gelo na jarra</b><span>120 g</span></div><div class="spec"><b>Moagem</b><span>mais fina</span></div><div class="spec total"><b>Total</b><span>≈ 260 ml</span></div></div>
       <ol class="steps">
         <li><span>Coloque 120 g de gelo na jarra e a V60 em cima.</span></li>
         <li><span><span class="t">0:00</span> Bloom com 40 g por 45 s.</span></li>
@@ -511,9 +513,9 @@ html{scroll-behavior:smooth}
   <div class="sec-head"><h2>Origami</h2><span class="sec-note">aceita filtro cônico ou de fundo plano</span></div>
 
   <details>
-    <summary><span class="name">Origami com filtro cônico</span><span class="ratio">16 g → 260 g</span><span class="desc">Fluxo mais rápido que a V60. Xícara clara e aromática.</span></summary>
+    <summary><span class="name">Origami com filtro cônico</span><span class="ratio">16 g → 260 g<span class="vol"> · ≈ 230 ml</span></span><span class="desc">Fluxo mais rápido que a V60. Xícara clara e aromática.</span></summary>
     <div class="recipe">
-      <div class="specs"><div class="spec"><b>Café</b><span>16 g</span></div><div class="spec"><b>Água</b><span>260 g</span></div><div class="spec"><b>Proporção</b><span>1 : 16</span></div><div class="spec"><b>Água</b><span>92–94 °C</span></div><div class="spec"><b>Total</b><span>≈ 2:30–3:00</span></div></div>
+      <div class="specs"><div class="spec"><b>Café</b><span>16 g</span></div><div class="spec"><b>Água</b><span>260 g</span></div><div class="spec"><b>Proporção</b><span>1 : 16</span></div><div class="spec"><b>Água</b><span>92–94 °C</span></div><div class="spec"><b>Tempo</b><span>≈ 2:30–3:00</span></div><div class="spec total"><b>Total</b><span>≈ 230 ml</span></div></div>
       <ol class="steps">
         <li><span>Use filtro V60. Moa um pouco mais fino que na V60, porque as ranhuras drenam rápido.</span></li>
         <li><span><span class="t">0:00</span> Bloom com 40 g por 40 s.</span></li>
@@ -526,9 +528,9 @@ html{scroll-behavior:smooth}
   </details>
 
   <details>
-    <summary><span class="name">Origami com filtro de fundo plano</span><span class="ratio">20 g → 320 g</span><span class="desc">Filtro tipo Kalita Wave. Mais corpo e doçura, muito consistente.</span></summary>
+    <summary><span class="name">Origami com filtro de fundo plano</span><span class="ratio">20 g → 320 g<span class="vol"> · ≈ 280 ml</span></span><span class="desc">Filtro tipo Kalita Wave. Mais corpo e doçura, muito consistente.</span></summary>
     <div class="recipe">
-      <div class="specs"><div class="spec"><b>Café</b><span>20 g</span></div><div class="spec"><b>Água</b><span>320 g</span></div><div class="spec"><b>Proporção</b><span>1 : 16</span></div><div class="spec"><b>Moagem</b><span>média</span></div><div class="spec"><b>Total</b><span>≈ 3:00–3:30</span></div></div>
+      <div class="specs"><div class="spec"><b>Café</b><span>20 g</span></div><div class="spec"><b>Água</b><span>320 g</span></div><div class="spec"><b>Proporção</b><span>1 : 16</span></div><div class="spec"><b>Moagem</b><span>média</span></div><div class="spec"><b>Tempo</b><span>≈ 3:00–3:30</span></div><div class="spec total"><b>Total</b><span>≈ 280 ml</span></div></div>
       <ol class="steps">
         <li><span>Encaixe o filtro de fundo plano (185) e enxágue.</span></li>
         <li><span><span class="t">0:00</span> Bloom com 50 g por 30–40 s.</span></li>
@@ -540,9 +542,9 @@ html{scroll-behavior:smooth}
   </details>
 
   <details>
-    <summary><span class="name">Origami para dois</span><span class="ratio">30 g → 480 g</span><span class="desc">Duas xícaras de uma vez, com filtro de fundo plano.</span></summary>
+    <summary><span class="name">Origami para dois</span><span class="ratio">30 g → 480 g<span class="vol"> · ≈ 420 ml</span></span><span class="desc">Duas xícaras de uma vez, com filtro de fundo plano.</span></summary>
     <div class="recipe">
-      <div class="specs"><div class="spec"><b>Café</b><span>30 g</span></div><div class="spec"><b>Água</b><span>480 g</span></div><div class="spec"><b>Proporção</b><span>1 : 16</span></div><div class="spec"><b>Total</b><span>≈ 3:45–4:15</span></div></div>
+      <div class="specs"><div class="spec"><b>Café</b><span>30 g</span></div><div class="spec"><b>Água</b><span>480 g</span></div><div class="spec"><b>Proporção</b><span>1 : 16</span></div><div class="spec"><b>Tempo</b><span>≈ 3:45–4:15</span></div><div class="spec total"><b>Total</b><span>≈ 420 ml (2 × 210)</span></div></div>
       <ol class="steps">
         <li><span>Moa um pouco mais grosso que na receita de 20 g.</span></li>
         <li><span><span class="t">0:00</span> Bloom com 75 g por 45 s.</span></li>
@@ -1059,6 +1061,23 @@ html{scroll-behavior:smooth}
   }
   window.addEventListener('hashchange',function(){fromHash(false);});
   if(!fromHash(true)){var saved=null;try{saved=localStorage.getItem(KEY);}catch(e){} show(saved||'cardapio',{first:true});}
+})();
+</script>
+<script>
+// Última célula das especificações ocupa o resto da linha (sem buraco cinza)
+(function(){
+  function fit(){
+    document.querySelectorAll('.specs').forEach(function(g){
+      var last=g.lastElementChild; if(!last) return; last.style.gridColumn='';
+      if(!g.offsetParent) return;
+      var cols=getComputedStyle(g).gridTemplateColumns.split(' ').length, n=g.children.length, r=n%cols;
+      if(r) last.style.gridColumn='span '+(cols-r+1);
+    });
+  }
+  window.addEventListener('resize',fit);
+  document.addEventListener('toggle',fit,true);
+  document.querySelectorAll('.tab').forEach(function(b){b.addEventListener('click',function(){setTimeout(fit,0);});});
+  fit();
 })();
 </script>
 <script>
