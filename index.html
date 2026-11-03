@@ -59,7 +59,27 @@ body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-siz
 .wrap{max-width:760px;margin:0 auto;padding-block:28px 64px;
   padding-left:max(16px, env(safe-area-inset-left, 0px));
   padding-right:max(16px, env(safe-area-inset-right, 0px));
-  display:flex;flex-direction:column;gap:40px}
+  display:flex;flex-direction:column;gap:40px;
+  padding-bottom:calc(96px + env(safe-area-inset-bottom, 0px))}
+
+/* Abas tipo app */
+.page-head{display:flex;flex-direction:column;gap:10px;border-bottom:2px solid var(--ink);padding-bottom:18px}
+.h1-sm{font-size:clamp(40px,10vw,58px)}
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--paper);border-top:1px solid var(--line);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  padding-left:max(8px, env(safe-area-inset-left, 0px));padding-right:max(8px, env(safe-area-inset-right, 0px))}
+.tabbar-in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+.tab{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 2px 10px;background:none;border:0;color:var(--muted);
+  font:600 11.5px var(--font-body);letter-spacing:.01em;cursor:pointer;-webkit-tap-highlight-color:transparent;min-width:0}
+.tab .ic{width:56px;height:30px;border-radius:999px;display:grid;place-items:center;transition:background-color .2s}
+.tab svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tab[aria-selected="true"]{color:var(--accent)}
+.tab[aria-selected="true"] .ic{background:var(--accent-soft)}
+.tab:focus-visible{outline:none}
+.tab:focus-visible .ic{outline:2px solid var(--accent);outline-offset:1px}
+.view-in{animation:viewIn .22s ease-out}
+@keyframes viewIn{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.view-in{animation:none}.tab .ic{transition:none}}
 
 header{display:flex;flex-direction:column;gap:14px;border-bottom:2px solid var(--ink);padding-bottom:22px}
 .eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
@@ -184,26 +204,41 @@ html{scroll-behavior:smooth}
 </head>
 <body>
 <div class="wrap">
-<header>
+<header data-tab="cardapio">
   <div class="eyebrow">Cardápio · bar de casa</div>
   <h1>Café<br><em>do Gui</em></h1>
   <p class="lede">Receitas para a máquina de espresso, a V60 e o Origami. Toque numa bebida para abrir a receita com doses, tempos e passos.</p>
   <div class="kit"><span>Espresso 9 g / 18 g</span><span>Hario V60</span><span>Origami Dripper</span></div>
 </header>
 
-<nav aria-label="Seções">
-  <a href="#espresso">Espresso</a>
-  <a href="#leite">Com leite</a>
-  <a href="#gelados">Gelados</a>
-  <a href="#v60">V60</a>
-  <a href="#origami">Origami</a>
-  <a href="#caderno">Caderno</a>
-  <a href="#calculadora">Calculadora</a>
-  <a href="#ajustes">Ajustes</a>
+<header class="page-head" data-tab="coados">
+  <div class="eyebrow">Café do Gui</div>
+  <h1 class="h1-sm">Coados</h1>
+  <p class="lede">V60 e Origami com timer guiado. Toque em Começar junto com o bloom e siga os despejos.</p>
+</header>
+<header class="page-head" data-tab="caderno">
+  <div class="eyebrow">Café do Gui</div>
+  <h1 class="h1-sm">Caderno</h1>
+  <p class="lede">Seus cafés, a torra e o ajuste que funcionou.</p>
+</header>
+<header class="page-head" data-tab="ferramentas">
+  <div class="eyebrow">Café do Gui</div>
+  <h1 class="h1-sm">Ferramentas</h1>
+  <p class="lede">Calculadora de proporção e o que mudar quando o café não sai do jeito certo.</p>
+</header>
+
+<nav aria-label="Seções" id="subnav">
+  <a href="#espresso" data-tab="cardapio">Espresso</a>
+  <a href="#leite" data-tab="cardapio">Com leite</a>
+  <a href="#gelados" data-tab="cardapio">Gelados</a>
+  <a href="#v60" data-tab="coados">V60</a>
+  <a href="#origami" data-tab="coados">Origami</a>
+  <a href="#calculadora" data-tab="ferramentas">Calculadora</a>
+  <a href="#ajustes" data-tab="ferramentas">Ajustes</a>
 </nav>
 
 <!-- ESPRESSO -->
-<section id="espresso">
+<section id="espresso" data-tab="cardapio">
   <div class="sec-head"><h2>Espresso</h2><span class="sec-note">9 bar · 92–94 °C</span></div>
 
   <details>
@@ -283,7 +318,7 @@ html{scroll-behavior:smooth}
 </section>
 
 <!-- COM LEITE -->
-<section id="leite">
+<section id="leite" data-tab="cardapio">
   <div class="sec-head"><h2>Com leite</h2><span class="sec-note">leite a 55–65 °C</span></div>
 
   <details>
@@ -371,7 +406,7 @@ html{scroll-behavior:smooth}
 </section>
 
 <!-- GELADOS -->
-<section id="gelados">
+<section id="gelados" data-tab="cardapio">
   <div class="sec-head"><h2>Gelados</h2><span class="sec-note">gelo sempre por último no shaker, primeiro no copo</span></div>
 
   <details>
@@ -423,7 +458,7 @@ html{scroll-behavior:smooth}
 </section>
 
 <!-- V60 -->
-<section id="v60">
+<section id="v60" data-tab="coados">
   <div class="sec-head"><h2>V60</h2><span class="sec-note">filtro cônico · moagem média-fina</span></div>
 
   <details>
@@ -472,7 +507,7 @@ html{scroll-behavior:smooth}
 </section>
 
 <!-- ORIGAMI -->
-<section id="origami">
+<section id="origami" data-tab="coados">
   <div class="sec-head"><h2>Origami</h2><span class="sec-note">aceita filtro cônico ou de fundo plano</span></div>
 
   <details>
@@ -518,8 +553,7 @@ html{scroll-behavior:smooth}
 </section>
 
 <!-- CADERNO -->
-<section id="caderno">
-  <div class="sec-head"><h2>Caderno</h2><span class="sec-note">seus cafés e o ajuste que funcionou</span></div>
+<section id="caderno" data-tab="caderno">
   <form class="nb-form" id="nb-form" autocomplete="off">
     <h3 id="nb-title">Nova anotação</h3>
     <div class="nb-grid">
@@ -558,7 +592,7 @@ html{scroll-behavior:smooth}
 </section>
 
 <!-- CALCULADORA -->
-<section id="calculadora">
+<section id="calculadora" data-tab="ferramentas">
   <div class="sec-head"><h2>Calculadora</h2><span class="sec-note">a partir do café ou da bebida pronta</span></div>
   <div class="calc">
     <div class="mode" role="group" aria-label="Calcular a partir de">
@@ -588,7 +622,7 @@ html{scroll-behavior:smooth}
 </section>
 
 <!-- AJUSTES -->
-<section id="ajustes">
+<section id="ajustes" data-tab="ferramentas">
   <div class="sec-head"><h2>Ajustes rápidos</h2><span class="sec-note">mude uma coisa por vez</span></div>
   <div class="fix">
     <div><h3>Azedo, ralo, salgado</h3><p>Subextraído. Moa mais fino, use água mais quente ou alongue a extração.</p></div>
@@ -600,6 +634,17 @@ html{scroll-behavior:smooth}
 
 <footer>Café do Gui · receitas de referência. Ajuste ao seu café, à sua moagem e ao seu gosto.</footer>
 </div>
+
+<div class="tabbar" role="tablist" aria-label="Café do Gui">
+  <div class="tabbar-in">
+    <button class="tab" type="button" role="tab" data-go="cardapio" id="tab-cardapio"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10h12v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/><path d="M16 11.5h1.5a2.5 2.5 0 0 1 0 5H15.5"/><path d="M8 3.5c-.9 1 .9 2 0 3.5M12 3.5c-.9 1 .9 2 0 3.5"/></svg></span>Cardápio</button>
+    <button class="tab" type="button" role="tab" data-go="coados" id="tab-coados"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18"/><path d="M5.5 5l4.5 7.5h4L18.5 5"/><path d="M7 15.5h10v1.5a4 4 0 0 1-4 4h-2a4 4 0 0 1-4-4z"/></svg></span>Coados</button>
+    <button class="tab" type="button" role="tab" data-go="caderno" id="tab-caderno"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3.5"/></svg></span>Caderno</button>
+    <button class="tab" type="button" role="tab" data-go="ferramentas" id="tab-ferramentas"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><rect x="8" y="6" width="8" height="3.5" rx="1"/><path d="M8.6 13.5h.01M12 13.5h.01M15.4 13.5h.01M8.6 17h.01M12 17h.01M15.4 17h.01" stroke-width="2.6"/></svg></span>Ferramentas</button>
+  </div>
+</div>
+
+
 
 <script>
 (function(){
@@ -975,6 +1020,45 @@ html{scroll-behavior:smooth}
   });
 
   load(); clear(); render();
+})();
+</script>
+<script>
+/* ---------- Abas ---------- */
+(function(){
+  var TABS=['cardapio','coados','caderno','ferramentas'], KEY='cafe-do-gui:aba', cur=null;
+  var views=document.querySelectorAll('.wrap > [data-tab]'), links=document.querySelectorAll('#subnav a'), nav=document.getElementById('subnav');
+  function tabOf(id){var el=document.getElementById(id);return el&&el.getAttribute('data-tab');}
+  function show(tab,opts){
+    opts=opts||{};
+    if(TABS.indexOf(tab)<0) tab='cardapio';
+    var changed=tab!==cur; cur=tab;
+    views.forEach(function(v){var on=v.getAttribute('data-tab')===tab; v.hidden=!on; if(on&&changed&&!opts.first){v.classList.remove('view-in');void v.offsetWidth;v.classList.add('view-in');}});
+    var n=0; links.forEach(function(a){var on=a.getAttribute('data-tab')===tab;a.hidden=!on;if(on)n++;});
+    nav.hidden=n<2;
+    document.querySelectorAll('.tab').forEach(function(b){var on=b.getAttribute('data-go')===tab;b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1;});
+    try{localStorage.setItem(KEY,tab);}catch(e){}
+    if(changed&&!opts.keepScroll) window.scrollTo({top:0,left:0,behavior:'instant'});
+  }
+  document.querySelectorAll('.tab').forEach(function(b){
+    b.addEventListener('click',function(){
+      var t=b.getAttribute('data-go');
+      if(t===cur){window.scrollTo({top:0,behavior:'smooth'});return;}
+      show(t); try{history.replaceState(null,'','#'+t);}catch(e){}
+    });
+    b.addEventListener('keydown',function(e){
+      var i=TABS.indexOf(b.getAttribute('data-go'));
+      if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();var t=TABS[(i+(e.key==='ArrowRight'?1:3))%4];show(t);document.getElementById('tab-'+t).focus();}
+    });
+  });
+  function fromHash(first){
+    var h=(location.hash||'').slice(1);
+    if(TABS.indexOf(h)>=0){show(h,{first:first});return true;}
+    var t=h&&tabOf(h);
+    if(t){show(t,{first:first,keepScroll:true});var el=document.getElementById(h);setTimeout(function(){el.scrollIntoView();},0);return true;}
+    return false;
+  }
+  window.addEventListener('hashchange',function(){fromHash(false);});
+  if(!fromHash(true)){var saved=null;try{saved=localStorage.getItem(KEY);}catch(e){} show(saved||'cardapio',{first:true});}
 })();
 </script>
 <script>
