@@ -137,7 +137,15 @@ ol.steps li::before{content:counter(s);font-family:var(--font-mono);font-size:12
 .calc-row{display:flex;flex-wrap:wrap;gap:12px}
 .field{display:flex;flex-direction:column;gap:4px;flex:1 1 140px;min-width:0}
 .field label{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.field input,.field select{font:600 18px var(--font-mono);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;width:100%}
+.field input,.field select{-webkit-appearance:none;appearance:none;display:block;box-sizing:border-box;width:100%;min-width:0;max-width:100%;height:48px;margin:0;
+  padding:0 12px;font:600 18px/1.2 var(--font-mono);color:var(--ink);background-color:var(--bg);border:1px solid var(--line);border-radius:8px}
+.field select{padding-right:38px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%238A8178' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:16px;text-overflow:ellipsis}
+.field input::placeholder,.field textarea::placeholder{color:var(--muted);opacity:.75}
+.field input[type="number"]{-moz-appearance:textfield}
+.field input::-webkit-outer-spin-button,.field input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.field input[type="date"]{line-height:46px;text-align:left}
+.field input[type="date"]::-webkit-date-and-time-value{text-align:left;margin:0}
+.field input[type="date"]::-webkit-calendar-picker-indicator{opacity:.55}
 .field input:focus,.field select:focus{outline:2px solid var(--accent);outline-offset:1px}
 .result{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
 .result div{display:flex;flex-direction:column}
@@ -169,11 +177,12 @@ ol.steps li::before{content:counter(s);font-family:var(--font-mono);font-size:12
 /* Caderno */
 .nb-form{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:14px}
 .nb-form h3{margin:0;font-family:var(--font-display);font-weight:400;font-size:22px}
-.nb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.nb-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 12px}
 .nb-grid .wide{grid-column:1/-1}
 .field textarea{font:400 16px var(--font-body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;width:100%;min-height:72px;resize:vertical}
 .field textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
-.field input[type="text"],.field input[type="date"]{font:500 16px var(--font-body)}
+.nb-form .field input,.nb-form .field select{font:500 16px/1.2 var(--font-body)}
+.nb-form .field input[type="date"]{line-height:46px}
 .stars{display:flex;gap:4px}
 .stars button{font-size:26px;line-height:1;background:none;border:0;padding:2px;cursor:pointer;color:var(--line)}
 .stars button.on{color:var(--crema)}
@@ -559,19 +568,19 @@ html{scroll-behavior:smooth}
     <h3 id="nb-title">Nova anotação</h3>
     <div class="nb-grid">
       <div class="field wide"><label for="nb-cafe">Café</label><input id="nb-cafe" type="text" required placeholder="Ex.: Mantiqueira amarelo bourbon"></div>
-      <div class="field"><label for="nb-torref">Torrefação</label><input id="nb-torref" type="text" placeholder="Ex.: Café da fazenda"></div>
-      <div class="field"><label for="nb-origem">Origem / processo</label><input id="nb-origem" type="text" placeholder="Ex.: Sul de Minas, natural"></div>
+      <div class="field"><label for="nb-torref">Torrefação</label><input id="nb-torref" type="text" placeholder="Ex.: Fazenda X"></div>
+      <div class="field"><label for="nb-origem">Origem / processo</label><input id="nb-origem" type="text" placeholder="Ex.: Sul de Minas"></div>
       <div class="field"><label for="nb-torra">Torra</label><select id="nb-torra"><option value="">—</option><option>Clara</option><option>Média-clara</option><option>Média</option><option>Média-escura</option><option>Escura</option></select></div>
       <div class="field"><label for="nb-dtorra">Data de torra</label><input id="nb-dtorra" type="date"></div>
-      <div class="field"><label for="nb-dprep">Data do preparo</label><input id="nb-dprep" type="date"></div>
       <div class="field wide"><label for="nb-metodo">Receita</label><select id="nb-metodo"></select></div>
+      <div class="field"><label for="nb-dprep">Data do preparo</label><input id="nb-dprep" type="date"></div>
       <div class="field"><label for="nb-moagem">Moagem</label><input id="nb-moagem" type="text" placeholder="Ex.: 12 cliques"></div>
-      <div class="field"><label for="nb-dose">Café (g)</label><input id="nb-dose" type="number" inputmode="decimal" step="0.1" min="0"></div>
-      <div class="field"><label for="nb-rend">Bebida / água (g)</label><input id="nb-rend" type="number" inputmode="decimal" step="1" min="0"></div>
-      <div class="field"><label for="nb-tempo">Tempo</label><input id="nb-tempo" type="text" placeholder="Ex.: 28 s ou 3:10"></div>
-      <div class="field"><label for="nb-temp">Água (°C)</label><input id="nb-temp" type="number" inputmode="numeric" step="1" min="0" max="100"></div>
-      <div class="field wide"><span class="field-label" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">Nota</span>
-        <div class="stars" id="nb-stars" role="radiogroup" aria-label="Nota de 1 a 5"></div></div>
+      <div class="field"><label for="nb-dose">Café (g)</label><input id="nb-dose" type="number" inputmode="decimal" step="0.1" min="0" placeholder="Ex.: 18"></div>
+      <div class="field"><label for="nb-rend">Bebida / água (g)</label><input id="nb-rend" type="number" inputmode="decimal" step="1" min="0" placeholder="Ex.: 36"></div>
+      <div class="field"><label for="nb-tempo">Tempo</label><input id="nb-tempo" type="text" placeholder="Ex.: 28 s"></div>
+      <div class="field"><label for="nb-temp">Água (°C)</label><input id="nb-temp" type="number" inputmode="numeric" step="1" min="0" max="100" placeholder="Ex.: 93"></div>
+      <div class="field wide"><label id="nb-nota-l">Nota</label>
+        <div class="stars" id="nb-stars" role="radiogroup" aria-labelledby="nb-nota-l"></div></div>
       <div class="field wide"><label for="nb-obs">Sabor e próximos ajustes</label><textarea id="nb-obs" placeholder="Ex.: doce, chocolate ao leite. Próxima vez moer 1 clique mais fino."></textarea></div>
     </div>
     <div class="btns">
