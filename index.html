@@ -206,6 +206,13 @@ ol.steps li::before{content:counter(s);font-family:var(--font-mono);font-size:12
 .callout{border:1px solid var(--line);background:var(--paper);border-radius:10px;padding:12px 14px;font-size:14.5px;line-height:1.5;margin:0 0 6px}
 .callout b{color:var(--accent)}
 .machine{background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.mblock{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.mblock h3{margin:0;font-size:17px}
+.mblock p{margin:0;font-size:14.5px;line-height:1.5}
+.mblock .goal{display:flex;flex-wrap:wrap;gap:6px}
+.mblock .goal span{font-family:var(--font-mono);font-size:12.5px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;background:var(--bg)}
+.mblock .goal span b{color:var(--accent)}
+.mstack{display:flex;flex-direction:column;gap:12px}
 .machine dl{margin:0;display:grid;grid-template-columns:minmax(0,9.5em) minmax(0,1fr)}
 .machine dt,.machine dd{margin:0;padding:12px 14px;border-top:1px solid var(--line);font-size:14.5px;line-height:1.45}
 .machine dt{font-weight:700}
@@ -260,15 +267,15 @@ html{scroll-behavior:smooth}
 
 <!-- ESPRESSO -->
 <section id="espresso" data-tab="cardapio">
-  <div class="sec-head"><h2>Espresso</h2><span class="sec-note">6–12 bar · 92–94 °C</span></div>
-  <p class="callout">Na sua Expert ECM90, use o botão <b>Espresso manual</b>: toque para começar e toque de novo quando a balança chegar no peso da receita. Os botões de 1 e 2 doses saem bem mais longos, veja em Ferramentas → Minha máquina.</p>
+  <div class="sec-head"><h2>Espresso</h2><span class="sec-note">6–12 bar · 92 °C padrão</span></div>
+  <p class="callout">Na sua Expert ECM90, use o botão <b>Espresso manual</b> e toque de novo quando a balança chegar no peso da receita. Ou programe os botões de 1 e 2 doses para 18 g e 36 g e use direto: o passo a passo está em Ferramentas → Minha máquina.</p>
 
   <details>
     <summary><span class="name">Espresso simples</span><span class="ratio">9 g → 18 g<span class="vol"> · ≈ 20 ml</span></span><span class="desc">A dose curta da máquina. Bom para provar um café novo.</span></summary>
     <div class="recipe">
       <div class="specs"><div class="spec"><b>Café</b><span>9 g</span></div><div class="spec"><b>Na xícara</b><span>18 g</span></div><div class="spec"><b>Proporção</b><span>1 : 2</span></div><div class="spec"><b>Tempo</b><span>25–30 s</span></div><div class="spec total"><b>Total</b><span>≈ 20 ml</span></div></div>
       <ol class="steps">
-        <li><span>Pese 9 g e moa fino. Use o cesto simples.</span></li>
+        <li><span>Pese 9 g e moa fino (comece no ponto 12). Use o filtro de 1 dose.</span></li>
         <li><span>Distribua, nivele e compacte com pressão firme e reta.</span></li>
         <li><span>Purgue o grupo por 2 s, encaixe e extraia direto na xícara pré-aquecida.</span></li>
         <li><span>Pare em <span class="t">18 g</span> na balança, entre <span class="t">25 e 30 s</span>.</span></li>
@@ -282,12 +289,12 @@ html{scroll-behavior:smooth}
     <div class="recipe">
       <div class="specs"><div class="spec"><b>Café</b><span>18 g</span></div><div class="spec"><b>Na xícara</b><span>36 g</span></div><div class="spec"><b>Proporção</b><span>1 : 2</span></div><div class="spec"><b>Tempo</b><span>25–30 s</span></div><div class="spec total"><b>Total</b><span>≈ 40 ml</span></div></div>
       <ol class="steps">
-        <li><span>Pese 18 g, moa fino e use o cesto duplo.</span></li>
+        <li><span>Pese 18 g, moa fino (comece no ponto 12) e use o filtro de 2 doses.</span></li>
         <li><span>Distribua com WDT ou batidinhas laterais e compacte nivelado.</span></li>
         <li><span>Extraia até <span class="t">36 g</span>. Primeiras gotas em torno de <span class="t">6–8 s</span>.</span></li>
         <li><span>Mexa antes de beber: o espresso separa em camadas.</span></li>
       </ol>
-      <p class="tip">Torras escuras: 93 °C ou menos. Torras claras: 94 °C e até 1 : 2,5 (45 g).</p>
+      <p class="tip">Torras escuras: 90–92 °C. Torras claras: 94–96 °C e até 1 : 2,5 (45 g). A temperatura se ajusta na máquina, veja em Minha máquina.</p>
     </div>
   </details>
 
@@ -646,22 +653,58 @@ html{scroll-behavior:smooth}
 <!-- AJUSTES -->
 <section id="maquina" data-tab="ferramentas">
   <div class="sec-head"><h2>Minha máquina</h2><span class="sec-note">Electrolux Expert ECM90</span></div>
+  <div class="mstack">
+
+  <div class="mblock" id="prog-espresso">
+    <h3>Programar os botões de espresso</h3>
+    <div class="goal"><span>1 dose → <b>18 g</b> (com 9 g)</span><span>2 doses → <b>36 g</b> (com 18 g)</span></div>
+    <ol class="steps">
+      <li><span>Prepare o porta-filtro como numa receita: 9 g no filtro de 1 dose ou 18 g no de 2 doses, compactado.</span></li>
+      <li><span>Encaixe, coloque a xícara na balança e zere.</span></li>
+      <li><span>Pressione e <b>segure</b> o botão de espresso de 1 ou 2 doses. Depois de <span class="t">3 s</span> a luz do outro botão apaga e o café começa a sair. Continue segurando.</span></li>
+      <li><span>Solte uns 2 g antes do alvo, em <span class="t">16 g</span> ou <span class="t">34 g</span>: o que pinga depois completa. Um bipe confirma e o volume fica salvo.</span></li>
+      <li><span>Faça mais uma extração normal, tocando só uma vez no botão, para conferir. Se passar ou faltar, grave de novo.</span></li>
+    </ol>
+    <p class="tip">Padrão de fábrica: 40 ml (1 dose) e 80 ml (2 doses). Faixa permitida: 20–125 ml e 20–200 ml. Você mediu ≈ 62 g e ≈ 106 g sem café, então os botões já estavam acima do padrão.</p>
+  </div>
+
+  <div class="mblock" id="prog-moagem">
+    <h3>Programar a dose do moedor</h3>
+    <div class="goal"><span>1 dose → <b>9 g</b></span><span>2 doses → <b>18 g</b></span></div>
+    <ol class="steps">
+      <li><span>Pese o porta-filtro vazio com o filtro e zere a balança.</span></li>
+      <li><span>Encaixe o porta-filtro no suporte de moagem.</span></li>
+      <li><span>Pressione e <b>segure</b> o botão de moagem de 1 ou 2 doses. Depois de <span class="t">3 s</span> a moagem começa. Continue segurando.</span></li>
+      <li><span>Solte quando achar que chegou perto do peso. Um bipe confirma e a quantidade fica salva.</span></li>
+      <li><span>Pese. Se não deu 9 g ou 18 g, grave de novo segurando um pouco mais ou menos.</span></li>
+    </ol>
+    <p class="tip">Padrão de fábrica: ≈ 13 g (1 dose) e ≈ 19 g (2 doses). O moedor dosa por tempo: quando mudar o ponto de moagem ou o café, pese de novo.</p>
+  </div>
+
+  <div class="mblock" id="prog-temp">
+    <h3>Temperatura da extração</h3>
+    <div class="goal"><span>Padrão <b>92 °C</b></span><span>90 · 92 · 94 · 96 °C</span></div>
+    <ol class="steps">
+      <li><span>Pressione e segure o botão <b>Espresso manual</b> até ouvir o bipe.</span></li>
+      <li><span>Toque no botão da temperatura (a escolhida pisca): moagem 1 dose = <span class="t">90 °C</span>, moagem 2 doses = <span class="t">92 °C</span>, espresso 1 dose = <span class="t">94 °C</span>, espresso 2 doses = <span class="t">96 °C</span>.</span></li>
+      <li><span>Toque em Espresso manual para salvar. Se não tocar em nada por 10 s, ela volta sem mudar.</span></li>
+    </ol>
+    <p class="tip">Torra escura: 90–92 °C. Torra média: 92–94 °C. Torra clara: 94–96 °C.</p>
+  </div>
+
   <div class="machine"><dl>
-    <dt>Espresso manual</dt>
-    <dd>Toque para começar, toque de novo para parar. É o botão das receitas: pare pelo peso na balança.</dd>
-    <dt>Espresso 1 dose</dt>
-    <dd>Sai <span class="num">≈ 62 g</span> de água (medido sem café).<small>Com 9 g de café, deve dar ≈ 50 g na xícara, perto de 1 : 5,5. Um lungo longo, não um espresso.</small></dd>
-    <dt>Espresso 2 doses</dt>
-    <dd>Sai <span class="num">≈ 106 g</span> de água em ≈ 59 s (medido sem café).<small>Com 18 g de café, deve dar ≈ 85–90 g, perto de 1 : 4,8. Bom para um americano curto.</small></dd>
-    <dt>Moagem 1 e 2 doses</dt>
-    <dd>O moedor dosa por tempo. Pese o pó: o alvo é <span class="num">9 g</span> e <span class="num">18 g</span>.<small>Se der diferente, a quantidade de pó pode ser ajustada.</small></dd>
     <dt>Ponto de moagem</dt>
-    <dd>Moedor cônico com 30 níveis. O fabricante sugere começar <span class="num">entre 10 e 20</span>.<small>Mude um ponto por vez e anote no Caderno o que funcionou para cada café.</small></dd>
+    <dd>Gire o recipiente de grãos: <span class="num">0 a 30</span>. Número menor = mais fino.<small>Para grãos recém-torrados, comece entre 10 e 15. A granulação certa lembra sal.</small></dd>
+    <dt>Espresso manual</dt>
+    <dd>Toque para começar, toque de novo para parar. Use quando quiser parar pelo peso, sem programar.</dd>
     <dt>Faixas do fabricante</dt>
     <dd>Manômetro <span class="num">6–12 bar</span> · tempo <span class="num">20–30 s</span> · proporção <span class="num">1 : 2</span> · água <span class="num">90–96 °C</span></dd>
-    <dt>Programar</dt>
-    <dd>Dá para personalizar a quantidade de pó, a temperatura e o volume de cada botão.<small>O passo a passo está em “Ajustes finos de operação”, no Manual de Instruções completo (QR code do guia rápido, em cuida.electrolux.com.br).</small></dd>
+    <dt>Voltar ao padrão</dt>
+    <dd>Tudo: segure Liga/Desliga até as outras luzes apagarem e solte no bipe.<small>Um botão só: segure moagem 1 e 2 doses juntos até o bipe. Depois segure o botão que quer restaurar por 3 s, solte no bipe e confirme em Liga/Desliga.</small></dd>
+    <dt>Limpeza</dt>
+    <dd>A luz de limpeza acende a cada <span class="num">15 L</span> de água.<small>Descalcifique com pastilha, ácido cítrico (50 g em 1 L de água morna) ou vinagre, seguindo a seção 4 do manual.</small></dd>
   </dl></div>
+  </div>
 </section>
 
 <section id="ajustes" data-tab="ferramentas">
