@@ -203,6 +203,16 @@ ol.steps li::before{content:counter(s);font-family:var(--font-mono);font-size:12
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 
 /* Ajustes */
+.callout{border:1px solid var(--line);background:var(--paper);border-radius:10px;padding:12px 14px;font-size:14.5px;line-height:1.5;margin:0 0 6px}
+.callout b{color:var(--accent)}
+.machine{background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.machine dl{margin:0;display:grid;grid-template-columns:minmax(0,9.5em) minmax(0,1fr)}
+.machine dt,.machine dd{margin:0;padding:12px 14px;border-top:1px solid var(--line);font-size:14.5px;line-height:1.45}
+.machine dt{font-weight:700}
+.machine dl > :nth-child(1),.machine dl > :nth-child(2){border-top:0}
+.machine dd small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+.machine .num{font-family:var(--font-mono);font-weight:600;color:var(--accent);white-space:nowrap}
+@media (max-width:440px){.machine dl{grid-template-columns:1fr}.machine dd{border-top:0;padding-top:0}.machine dl > :nth-child(2){border-top:0}}
 .fix{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
 .fix div{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--paper)}
 .fix h3{margin:0 0 4px;font-size:15px}
@@ -244,12 +254,14 @@ html{scroll-behavior:smooth}
   <a href="#v60" data-tab="coados">V60</a>
   <a href="#origami" data-tab="coados">Origami</a>
   <a href="#calculadora" data-tab="ferramentas">Calculadora</a>
+  <a href="#maquina" data-tab="ferramentas">Minha máquina</a>
   <a href="#ajustes" data-tab="ferramentas">Ajustes</a>
 </nav>
 
 <!-- ESPRESSO -->
 <section id="espresso" data-tab="cardapio">
-  <div class="sec-head"><h2>Espresso</h2><span class="sec-note">9 bar · 92–94 °C</span></div>
+  <div class="sec-head"><h2>Espresso</h2><span class="sec-note">6–12 bar · 92–94 °C</span></div>
+  <p class="callout">Na sua Expert ECM90, use o botão <b>Espresso manual</b>: toque para começar e toque de novo quando a balança chegar no peso da receita. Os botões de 1 e 2 doses saem bem mais longos, veja em Ferramentas → Minha máquina.</p>
 
   <details>
     <summary><span class="name">Espresso simples</span><span class="ratio">9 g → 18 g<span class="vol"> · ≈ 20 ml</span></span><span class="desc">A dose curta da máquina. Bom para provar um café novo.</span></summary>
@@ -632,6 +644,26 @@ html{scroll-behavior:smooth}
 </section>
 
 <!-- AJUSTES -->
+<section id="maquina" data-tab="ferramentas">
+  <div class="sec-head"><h2>Minha máquina</h2><span class="sec-note">Electrolux Expert ECM90</span></div>
+  <div class="machine"><dl>
+    <dt>Espresso manual</dt>
+    <dd>Toque para começar, toque de novo para parar. É o botão das receitas: pare pelo peso na balança.</dd>
+    <dt>Espresso 1 dose</dt>
+    <dd>Sai <span class="num">≈ 62 g</span> de água (medido sem café).<small>Com 9 g de café, deve dar ≈ 50 g na xícara, perto de 1 : 5,5. Um lungo longo, não um espresso.</small></dd>
+    <dt>Espresso 2 doses</dt>
+    <dd>Sai <span class="num">≈ 106 g</span> de água em ≈ 59 s (medido sem café).<small>Com 18 g de café, deve dar ≈ 85–90 g, perto de 1 : 4,8. Bom para um americano curto.</small></dd>
+    <dt>Moagem 1 e 2 doses</dt>
+    <dd>O moedor dosa por tempo. Pese o pó: o alvo é <span class="num">9 g</span> e <span class="num">18 g</span>.<small>Se der diferente, a quantidade de pó pode ser ajustada.</small></dd>
+    <dt>Ponto de moagem</dt>
+    <dd>Moedor cônico com 30 níveis. O fabricante sugere começar <span class="num">entre 10 e 20</span>.<small>Mude um ponto por vez e anote no Caderno o que funcionou para cada café.</small></dd>
+    <dt>Faixas do fabricante</dt>
+    <dd>Manômetro <span class="num">6–12 bar</span> · tempo <span class="num">20–30 s</span> · proporção <span class="num">1 : 2</span> · água <span class="num">90–96 °C</span></dd>
+    <dt>Programar</dt>
+    <dd>Dá para personalizar a quantidade de pó, a temperatura e o volume de cada botão.<small>O passo a passo está em “Ajustes finos de operação”, no Manual de Instruções completo (QR code do guia rápido, em cuida.electrolux.com.br).</small></dd>
+  </dl></div>
+</section>
+
 <section id="ajustes" data-tab="ferramentas">
   <div class="sec-head"><h2>Ajustes rápidos</h2><span class="sec-note">mude uma coisa por vez</span></div>
   <div class="fix">
