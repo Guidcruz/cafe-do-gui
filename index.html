@@ -202,6 +202,38 @@ ol.steps li::before{content:counter(s);font-family:var(--font-mono);font-size:12
 .empty{border:1px dashed var(--line);border-radius:12px;padding:22px;text-align:center;color:var(--muted)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 
+/* Disponibilidade */
+.tag-off{display:inline-block;margin-left:8px;vertical-align:2px;font:600 10.5px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 8px;border-radius:999px;background:var(--accent-soft);color:var(--warn);white-space:nowrap}
+details.off .thumb,details.off .ratio,details.off .desc{opacity:.45}
+details.off .name{color:var(--muted)}
+
+/* Modo família (/menu) */
+html.familia .tabbar,html.familia .callout,html.familia .sec-note,html.familia .kit,
+html.familia header .lede:not(.lede-familia),html.familia .thumb-hint{display:none!important}
+html.familia .wrap{padding-bottom:calc(48px + env(safe-area-inset-bottom, 0px))}
+html.familia summary{cursor:default}
+html.familia details[open] .name{color:inherit}
+.fam-updated{font-family:var(--font-mono);font-size:12px;color:var(--muted)}
+
+/* Painel do menu da família */
+.qr-row{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.qr{width:148px;height:148px;flex:none;background:#FFFFFF;border-radius:10px;padding:6px;display:grid;place-items:center}
+.qr svg,.qr img{width:100%;height:100%;display:block}
+.qr-info{flex:1 1 220px;min-width:0;display:flex;flex-direction:column;gap:10px}
+.qr-info code{font-family:var(--font-mono);font-size:13px;overflow-wrap:anywhere;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+a.btn{text-decoration:none;display:inline-block}
+.fam-list{display:flex;flex-direction:column;gap:16px}
+.fam-group h4{margin:0 0 2px;font:600 11px var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.tgl{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-top:1px dashed var(--line);font-size:15.5px;cursor:pointer}
+.tgl input{-webkit-appearance:none;appearance:none;width:46px;height:28px;border-radius:999px;background:var(--line);position:relative;flex:none;cursor:pointer;margin:0;transition:background-color .2s}
+.tgl input::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--paper);box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .2s}
+.tgl input:checked{background:var(--ok)}
+.tgl input:checked::after{transform:translateX(18px)}
+.tgl input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tgl.is-off > span{color:var(--muted);text-decoration:line-through}
+@media (prefers-reduced-motion:reduce){.tgl input,.tgl input::after{transition:none}}
+
 /* Ajustes */
 .callout{border:1px solid var(--line);background:var(--paper);border-radius:10px;padding:12px 14px;font-size:14.5px;line-height:1.5;margin:0 0 6px}
 .callout b{color:var(--accent)}
@@ -235,6 +267,8 @@ html{scroll-behavior:smooth}
   <div class="eyebrow">Cardápio · bar de casa</div>
   <h1>Café<br><em>do Gui</em></h1>
   <p class="lede">Receitas para a máquina de espresso, a V60 e o Origami. Toque numa bebida para abrir a receita com doses, tempos e passos.</p>
+  <p class="lede lede-familia" hidden>Escolha sua bebida e peça ao Gui. O que estiver marcado como indisponível está em falta hoje.</p>
+  <span class="fam-updated" id="fam-updated" hidden></span>
   <div class="kit"><span>Espresso 9 g / 18 g</span><span>Hario V60</span><span>Origami Dripper</span></div>
 </header>
 
@@ -260,6 +294,7 @@ html{scroll-behavior:smooth}
   <a href="#gelados" data-tab="cardapio">Gelados</a>
   <a href="#v60" data-tab="coados">V60</a>
   <a href="#origami" data-tab="coados">Origami</a>
+  <a href="#familia" data-tab="ferramentas">Menu da família</a>
   <a href="#calculadora" data-tab="ferramentas">Calculadora</a>
   <a href="#maquina" data-tab="ferramentas">Minha máquina</a>
   <a href="#ajustes" data-tab="ferramentas">Ajustes</a>
@@ -621,6 +656,39 @@ html{scroll-behavior:smooth}
 </section>
 
 <!-- CALCULADORA -->
+<section id="familia" data-tab="ferramentas">
+  <div class="sec-head"><h2>Menu da família</h2><span class="sec-note">o que tem hoje</span></div>
+  <div class="mstack">
+    <div class="mblock">
+      <h3>QR code do menu</h3>
+      <div class="qr-row">
+        <div class="qr" id="fam-qr" role="img" aria-label="QR code do menu da família"></div>
+        <div class="qr-info">
+          <p>Quem escanear vê só o cardápio, com as bebidas em falta marcadas como indisponíveis. Receitas, Caderno e Ferramentas não aparecem.</p>
+          <code id="fam-url">—</code>
+          <div class="btns">
+            <button class="btn ghost" type="button" id="fam-copy">Copiar link</button>
+            <button class="btn ghost" type="button" id="fam-qr-save">Salvar QR</button>
+            <a class="btn ghost" id="fam-open" href="/menu" target="_blank" rel="noopener">Ver como a família</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mblock">
+      <h3>Bebidas disponíveis</h3>
+      <p>Desmarque o que está em falta e toque em Salvar. A família vê a mudança ao abrir ou atualizar o menu.</p>
+      <div class="btns">
+        <button class="btn ghost" type="button" id="fam-all">Marcar todas</button>
+        <button class="btn ghost" type="button" id="fam-none">Desmarcar todas</button>
+      </div>
+      <div class="fam-list" id="fam-list"></div>
+      <div class="field"><label for="fam-pin">PIN</label><input id="fam-pin" type="password" inputmode="numeric" autocomplete="off" placeholder="O PIN que você criou no Cloudflare"></div>
+      <div class="btns"><button class="btn" type="button" id="fam-save">Salvar no menu</button></div>
+      <p class="calc-note" id="fam-msg" role="status"></p>
+    </div>
+  </div>
+</section>
+
 <section id="calculadora" data-tab="ferramentas">
   <div class="sec-head"><h2>Calculadora</h2><span class="sec-note">a partir do café ou da bebida pronta</span></div>
   <div class="calc">
@@ -1107,11 +1175,147 @@ html{scroll-behavior:smooth}
   load(); clear(); render();
 })();
 </script>
+<script src="/vendor/qrcode.js" defer></script>
+<script>
+/* ---------- Disponibilidade e menu da família ---------- */
+(function(){
+  var FAM=/^\/menu\/?$/.test(location.pathname)||/[?&]menu(=|&|$)/.test(location.search);
+  var API='/api/disponibilidade', KEY_OFF='cafe-do-gui:indisponiveis', KEY_PIN='cafe-do-gui:pin';
+  var $=function(id){return document.getElementById(id);};
+  var drinks=[];
+  document.querySelectorAll('.wrap > section[data-tab="cardapio"], .wrap > section[data-tab="coados"]').forEach(function(sec){
+    var h=sec.querySelector('h2');
+    sec.querySelectorAll('details').forEach(function(d){
+      var n=d.querySelector('.name'); if(!n) return;
+      var name=n.textContent.trim(); d.setAttribute('data-bebida',name);
+      drinks.push({name:name,el:d,group:h?h.textContent.trim():''});
+    });
+  });
+  var off=new Set();
+  try{(JSON.parse(localStorage.getItem(KEY_OFF)||'[]')||[]).forEach(function(n){off.add(n);});}catch(e){}
+
+  function apply(){
+    drinks.forEach(function(x){
+      var isOff=off.has(x.name), n=x.el.querySelector('.name'), tag=n.querySelector('.tag-off');
+      x.el.classList.toggle('off',isOff);
+      if(isOff&&!tag){tag=document.createElement('span');tag.className='tag-off';tag.textContent='Indisponível';n.appendChild(tag);}
+      if(!isOff&&tag) tag.remove();
+    });
+  }
+  function fmtData(iso){
+    try{var d=new Date(iso);return d.toLocaleDateString('pt-BR',{day:'numeric',month:'short'})+', '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});}catch(e){return '';}
+  }
+  var configured=null;
+  function load(){
+    return fetch(API,{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
+      off=new Set(Array.isArray(d.indisponiveis)?d.indisponiveis:[]);
+      configured=!!d.configurado;
+      try{localStorage.setItem(KEY_OFF,JSON.stringify([...off]));}catch(e){}
+      apply(); syncList();
+      if(FAM&&d.atualizado){var u=$('fam-updated');u.textContent='Atualizado em '+fmtData(d.atualizado);u.hidden=false;}
+      if(!FAM&&!configured) msg('O menu da família ainda não está ligado no Cloudflare. Falta criar o armazenamento DISPONIBILIDADE e o segredo ADMIN_PIN.');
+    }).catch(function(){ apply(); syncList(); });
+  }
+  function msg(t){var m=$('fam-msg'); if(m) m.textContent=t;}
+
+  if(FAM){
+    document.documentElement.classList.add('familia');
+    document.title='Cardápio · Café do Gui';
+    var mf=document.querySelector('link[rel="manifest"]'); if(mf) mf.href='/manifest-menu.webmanifest';
+    document.querySelectorAll('.lede-familia').forEach(function(e){e.hidden=false;});
+    document.querySelectorAll('.ratio').forEach(function(r){
+      var v=r.querySelector('.vol'); if(v) r.textContent=v.textContent.replace(/^\s*·\s*/,'');
+    });
+    document.querySelectorAll('summary').forEach(function(sm){
+      sm.addEventListener('click',function(e){e.preventDefault();});
+      sm.setAttribute('tabindex','-1');
+    });
+    var ft=document.querySelector('footer'); if(ft) ft.textContent='Café do Gui · peça a sua bebida ao Gui.';
+    apply(); load();
+    document.addEventListener('visibilitychange',function(){ if(!document.hidden) load(); });
+    return;
+  }
+
+  // ----- painel do Gui -----
+  var list=$('fam-list');
+  var groups={};
+  drinks.forEach(function(x){
+    if(!groups[x.group]){
+      var g=document.createElement('div'); g.className='fam-group';
+      var h=document.createElement('h4'); h.textContent=x.group; g.appendChild(h);
+      list.appendChild(g); groups[x.group]=g;
+    }
+    var lb=document.createElement('label'); lb.className='tgl';
+    var sp=document.createElement('span'); sp.textContent=x.name;
+    var cb=document.createElement('input'); cb.type='checkbox'; cb.setAttribute('role','switch'); cb.id='fam-'+x.name.toLowerCase().replace(/[^a-z0-9]+/g,'-');
+    cb.addEventListener('change',function(){lb.classList.toggle('is-off',!cb.checked);msg('Alterações ainda não salvas.');});
+    lb.appendChild(sp); lb.appendChild(cb); groups[x.group].appendChild(lb);
+    x.cb=cb; x.lb=lb;
+  });
+  function syncList(){ drinks.forEach(function(x){ if(!x.cb) return; x.cb.checked=!off.has(x.name); x.lb.classList.toggle('is-off',off.has(x.name)); }); }
+  $('fam-all').addEventListener('click',function(){drinks.forEach(function(x){x.cb.checked=true;x.lb.classList.remove('is-off');});msg('Alterações ainda não salvas.');});
+  $('fam-none').addEventListener('click',function(){drinks.forEach(function(x){x.cb.checked=false;x.lb.classList.add('is-off');});msg('Alterações ainda não salvas.');});
+  try{var pin=localStorage.getItem(KEY_PIN); if(pin) $('fam-pin').value=pin;}catch(e){}
+
+  $('fam-save').addEventListener('click',function(){
+    var pin=$('fam-pin').value.trim();
+    if(!pin){msg('Digite o PIN para salvar.');$('fam-pin').focus();return;}
+    var lista=drinks.filter(function(x){return !x.cb.checked;}).map(function(x){return x.name;});
+    var btn=this; btn.disabled=true; msg('Salvando…');
+    fetch(API,{method:'PUT',headers:{'content-type':'application/json','x-pin':pin},body:JSON.stringify({indisponiveis:lista})})
+      .then(function(r){return r.json().catch(function(){return {};}).then(function(d){return {r:r,d:d};});})
+      .then(function(o){
+        if(o.r.ok){
+          off=new Set(o.d.indisponiveis||lista); apply(); syncList();
+          try{localStorage.setItem(KEY_PIN,pin);localStorage.setItem(KEY_OFF,JSON.stringify([...off]));}catch(e){}
+          msg('Salvo. '+(off.size?off.size+(off.size>1?' bebidas aparecem':' bebida aparece')+' como indisponível no menu da família.':'Todas as bebidas aparecem como disponíveis.'));
+        } else if(o.r.status===401){ msg('PIN errado. Confira o valor de ADMIN_PIN no Cloudflare.'); try{localStorage.removeItem(KEY_PIN);}catch(e){} }
+        else if(o.r.status===503){ msg('O Cloudflare ainda não está configurado: falta o armazenamento DISPONIBILIDADE ou o segredo ADMIN_PIN.'); }
+        else if(o.r.status===404||o.r.status===405){ msg('Não encontrei a função do menu. Ela só funciona no site publicado no Cloudflare.'); }
+        else msg('Não consegui salvar (erro '+o.r.status+'). Tente de novo.');
+      })
+      .catch(function(){msg('Sem conexão com o site. Confira a internet e tente de novo.');})
+      .then(function(){btn.disabled=false;});
+  });
+
+  // link e QR code
+  var online=/^https?:$/.test(location.protocol);
+  var url=online?location.origin+'/menu':'';
+  $('fam-url').textContent=online?url:'Abra o site publicado para ver o link do menu.';
+  var qrObj=null;
+  function drawQR(){
+    if(!online||!window.qrcode||qrObj) return;
+    qrObj=qrcode(0,'M'); qrObj.addData(url); qrObj.make();
+    $('fam-qr').innerHTML=qrObj.createSvgTag({cellSize:4,margin:0,scalable:true});
+  }
+  window.addEventListener('load',drawQR); drawQR();
+  $('fam-copy').addEventListener('click',function(){
+    if(!online){msg('O link só existe no site publicado.');return;}
+    var done=function(){msg('Link copiado.');};
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(done,function(){sel();});} else sel();
+    function sel(){var r=document.createRange();r.selectNodeContents($('fam-url'));var s=getSelection();s.removeAllRanges();s.addRange(r);msg('Link selecionado: copie com o menu do celular.');}
+  });
+  $('fam-qr-save').addEventListener('click',function(){
+    drawQR(); if(!qrObj){msg('O QR code só aparece no site publicado, com internet.');return;}
+    var a=document.createElement('a'); a.href=qrObj.createDataURL(10,4); a.download='qr-menu-cafe-do-gui.gif';
+    document.body.appendChild(a); a.click(); a.remove(); msg('QR code salvo.');
+  });
+
+  apply(); syncList(); load();
+})();
+</script>
 <script>
 /* ---------- Abas ---------- */
 (function(){
   var TABS=['cardapio','coados','caderno','ferramentas'], KEY='cafe-do-gui:aba', cur=null;
   var views=document.querySelectorAll('.wrap > [data-tab]'), links=document.querySelectorAll('#subnav a'), nav=document.getElementById('subnav');
+  if(document.documentElement.classList.contains('familia')){
+    var MENU=['cardapio','coados'];
+    views.forEach(function(v){v.hidden=!(MENU.indexOf(v.getAttribute('data-tab'))>=0&&!v.classList.contains('page-head'));});
+    links.forEach(function(a){a.hidden=MENU.indexOf(a.getAttribute('data-tab'))<0;});
+    nav.hidden=false;
+    return;
+  }
   function tabOf(id){var el=document.getElementById(id);return el&&el.getAttribute('data-tab');}
   function show(tab,opts){
     opts=opts||{};

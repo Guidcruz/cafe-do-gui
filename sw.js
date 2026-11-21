@@ -1,6 +1,6 @@
 // Guarda o site para abrir mesmo sem internet. Busca a versão nova quando há conexão.
-const CACHE = 'cafe-do-gui-v12';
-const FILES = ['/', '/index.html', '/manifest.webmanifest', '/favicon.svg', '/icon-192.png', '/icon-512.png'];
+const CACHE = 'cafe-do-gui-v13';
+const FILES = ['/', '/index.html', '/manifest.webmanifest', '/favicon.svg', '/icon-192.png', '/icon-512.png', '/vendor/qrcode.js', '/manifest-menu.webmanifest'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));
 });
